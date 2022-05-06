@@ -7,10 +7,16 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <nav class="navbar fixed-top navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://www.instagram.com/abai.fabrikasy/">ABAI</a>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
