@@ -1,3 +1,3 @@
 class Factor < ApplicationRecord
-	validates: :min, :max, :value, presence: true
+	validates :min, :max, :value, presence: true
 end

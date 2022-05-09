@@ -39,7 +39,9 @@
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
                 <li><a class="dropdown-item" href="#">Разряды</a></li>
                 <li><a class="dropdown-item" href="#">Модели</a></li>
-                <li><a class="dropdown-item" href="#">Коэффициенты премии</a></li>
+                <li>
+                  <%= link_to "Коэффициенты премии", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
+                </li>
               </ul>
             </li>
             <li class="nav-item dropdown">
@@ -58,6 +60,8 @@
         </div>
       </div>
     </nav>
-    <%= yield %>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
