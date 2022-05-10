@@ -1,13 +1,16 @@
 <%= form_for factor do |f| %>
   <div class="row py-2">
     <div class="col">
-      <%= f.number_field :min, placeholder: 'От % включительно', class: 'form-control' %>
+      <%= f.label :min, "От % включительно", class: "form-label" %>
+      <%= f.number_field :min, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.number_field :max, placeholder: 'До % включительно', class: 'form-control' %>
+      <%= f.label :max, "До % включительно", class: "form-label" %>
+      <%= f.number_field :max, class: 'form-control' %>
     </div>
     <div class="col">
-      <%= f.number_field :value, placeholder: 'Коэффициент', step: '0.01', class: 'form-control' %>
+      <%= f.label :value, "Коэффициент", class: "form-label" %>
+      <%= f.number_field :value, step: '0.01', class: 'form-control' %>
     </div>
   </div>
 

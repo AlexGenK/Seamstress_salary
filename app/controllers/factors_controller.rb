@@ -1,41 +1,48 @@
 class FactorsController < ApplicationController
-   before_action :set_factor, only: [:edit, :update, :destroy]
+  before_action :set_factor, only: [:edit, :update, :destroy]
 
-   def index
+  def index
     @factors = Factor.order(:min)
-   end
+  end
 
-   def new
+  def new
     @factor = Factor.new
-   end
+  end
 
-   def create
-    value_multiplication    
+  def create   
     @factor = Factor.new(factor_params)
-      if @factor.save
-        redirect_to factors_path
-      else
-        flash[:alert] = 'Невозможно добавить коэффициент'
-        render :new
-      end
-   end
+    if @factor.save
+      redirect_to factors_path
+    else
+      flash[:alert] = 'Невозможно добавить коэффициент'
+      render :new
+    end
+  end
 
   def destroy
     flash[:alert] = 'Невозможно удалить коэффициент' unless @factor.destroy
     redirect_to factors_path
   end
 
-   private
+  def edit
+  end
 
-   def value_multiplication
-    params['factor']['value'] = (params['factor']['value'].to_f * 100).to_s
-   end
+  def update
+    if @factor.update(factor_params)
+      redirect_to factors_path
+    else
+      flash[:alert] = 'Невозможно отредактировать коэффициент'
+      render :edit
+    end
+  end
 
-   def factor_params
+  private
+
+  def factor_params
     params.require(:factor).permit(:min, :max, :value)
-   end
+  end
 
-   def set_factor
+  def set_factor
     @factor = Factor.find(params[:id])
-   end
+  end
 end
