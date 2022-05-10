@@ -20,6 +20,11 @@ class FactorsController < ApplicationController
       end
    end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить коэффициент' unless @factor.destroy
+    redirect_to factors_path
+  end
+
    private
 
    def value_multiplication
