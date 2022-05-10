@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   resources :productions
   resources :factors
 
+  resources :users
+
   root to: 'productions#index'
 end

@@ -33,7 +33,7 @@
               </ul>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle <%= controller_name == 'factors' ? 'active' : '' %>" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Справочники
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
@@ -54,7 +54,7 @@
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Пользователи</a>
+              <%= link_to "Пользователи", users_path, class: "nav-link #{controller_name == 'users' ? 'active' : ''}" %>
             </li>
           </ul>
           <ul class="navbar-nav ml-auto">
