@@ -2,14 +2,20 @@
 <table class="table table-striped table-sm">
   <thead>
     <tr>
+    	<th class='text-center'>Имя</th>
       <th class='text-center'>E-mail</th>
+      <th class='text-center'>Администратор</th>
+      <th class='text-center'>Работник</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
+      	<td class='text-center'><%= user.name %></td>
         <td class='text-center'><%= user.email %></td>
+        <td class='text-center'><%== user.admin_role? ? "<i class='fas fa-check'></i>" : "" %></td>
+        <td class='text-center'><%== user.worker_role? ? "<i class='fas fa-check'></i>" : "" %></td>
         <td>
           <div class="btn-group">
             <%= link_to edit_user_path(user), 
