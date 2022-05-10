@@ -1,0 +1,24 @@
+<%= form_for factor do |f| %>
+  <div class="row py-2">
+    <div class="col">
+      <%= f.number_field :min, placeholder: 'От % включительно', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.number_field :max, placeholder: 'До % включительно', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.number_field :value, placeholder: 'Коэффициент', step: '0.01', class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row py-2">
+    <div class="col">
+      <%= f.button type: 'submit', class: "btn btn-primary" do %>
+        <i class="fas fa-save"></i> Сохранить
+      <% end %>
+      <%= link_to :back, class: "btn btn-secondary" do %>
+          <i class="fas fa-undo-alt"></i> Вернуться
+        <% end %>
+    </div>
+  </div>
+<% end %>
