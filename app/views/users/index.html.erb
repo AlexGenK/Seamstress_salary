@@ -8,6 +8,7 @@
     <tr>
     	<th class='text-center'>Имя</th>
       <th class='text-center'>E-mail</th>
+      <th class='text-center'>Бригада</th>
       <th class='text-center'>Администратор</th>
       <th class='text-center'>Работник</th>
       <th></th>
@@ -18,6 +19,7 @@
       <tr>
       	<td class='text-center'><%= user.name %></td>
         <td class='text-center'><%= user.email %></td>
+        <td class='text-center'><%= user.team %></td>
         <td class='text-center'><%== user.admin_role? ? "<i class='fas fa-check'></i>" : "" %></td>
         <td class='text-center'><%== user.worker_role? ? "<i class='fas fa-check'></i>" : "" %></td>
         <td>
