@@ -60,7 +60,7 @@
           <ul class="navbar-nav ml-auto">
             <% if user_signed_in? %>
               <span class="navbar-text">
-                Пользователь: <%= current_user.email %> | 
+                Пользователь: <%= current_user.name %> | 
               </span>
               <li class="nav-item">
                 <%= link_to "Выход", destroy_user_session_path, method: :delete, class: "nav-link" %>
