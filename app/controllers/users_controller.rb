@@ -17,6 +17,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if @user.is_last_admin?
+      flash[:alert] = 'Невозможно удалить последнего администратора'
+    else
+      @user.destroy ? flash[:notice] = 'Пользователь был удален' : flash[:alert] = 'Невозможно удалить пользователя'
+    end
+    redirect_to users_path
+  end
+
   private
 
   def user_params
