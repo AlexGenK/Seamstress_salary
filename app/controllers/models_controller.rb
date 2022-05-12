@@ -20,6 +20,11 @@ class ModelsController < ApplicationController
     end
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить модель' unless @model.destroy
+    redirect_to models_path
+  end
+
   def edit
   end
 

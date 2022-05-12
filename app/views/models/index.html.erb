@@ -28,7 +28,7 @@
             <% end %>
             <%= link_to model, method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить модель и всю информацию о ней?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить модель #{model.number} и всю информацию о ней?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
           </div>
