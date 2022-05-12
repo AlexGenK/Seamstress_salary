@@ -1,4 +1,6 @@
 class RanksController < ApplicationController
+  before_action :set_rank, only: [:edit, :update, :destroy]
+
   def index
     @ranks=Rank.order(:sewing, :category)
   end
@@ -17,9 +19,18 @@ class RanksController < ApplicationController
     end
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить разряд' unless @rank.destroy
+    redirect_to ranks_path
+  end
+
   private
 
   def rank_params
     params.require(:rank).permit(:sewing, :category, :cost)
+  end
+
+  def set_rank
+    @rank = Rank.find(params[:id])
   end
 end
