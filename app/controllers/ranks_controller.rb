@@ -24,6 +24,17 @@ class RanksController < ApplicationController
     redirect_to ranks_path
   end
 
+  def edit
+  end
+
+  def update
+    if @rank.update(rank_params)
+      redirect_to ranks_path
+    else
+      flash[:alert] = 'Невозможно отредактировать коэффициент'
+      render :edit
+    end
+  end
   private
 
   def rank_params
