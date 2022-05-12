@@ -1,0 +1,27 @@
+<%= form_for rank do |f| %>
+  <div class="row py-2">
+    <div class="col">
+      <%= f.label :sewing, "Тип", class: "form-label" %>
+      <%= f.select :sewing, SEWING_TYPE, {}, {class: 'form-select'} %>
+    </div>
+    <div class="col">
+      <%= f.label :category, "Номер", class: "form-label" %>
+      <%= f.number_field :category, class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.label :cost, "Стоимость", class: "form-label" %>
+      <%= f.number_field :cost, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="row py-2">
+    <div class="col">
+      <%= f.button type: 'submit', class: "btn btn-primary" do %>
+        <i class="fas fa-save"></i> Сохранить
+      <% end %>
+      <%= link_to :back, class: "btn btn-secondary" do %>
+          <i class="fas fa-undo-alt"></i> Вернуться
+        <% end %>
+    </div>
+  </div>
+<% end %>
