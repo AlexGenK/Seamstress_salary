@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :productions
   resources :factors
   resources :ranks
+  resources :models
 
   resources :users
 

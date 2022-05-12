@@ -1,0 +1,39 @@
+<h2>Модели</h2>
+<%= link_to new_model_path, class: "btn btn-primary" do %>
+  <i class="fas fa-plus"></i> Добавить модель
+<% end %>
+</br>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Номер</th>
+      <th class='text-left'>Наименование</th>
+      <th class='text-center'>Тип</th>
+      <th class='text-center'>Стоимость</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @models.each do |model| %>
+      <tr>
+        <td class='text-center'><%= model.number %></td>
+        <td class='text-left'><%= model.name %></td>
+        <td class='text-center'><%= model.sewing %></td>
+        <td class='text-center'><%= model.cost %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to edit_model_path(model), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to model, method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить модель и всю информацию о ней?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
