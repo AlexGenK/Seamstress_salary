@@ -16,8 +16,8 @@
   <tbody>
     <% @models.each do |model| %>
       <tr>
-        <td class='text-center'><%= model.number %></td>
-        <td class='text-left'><%= model.name %></td>
+        <td class='text-center'><%= link_to model.number, model_operations_path(model) %></td>
+        <td class='text-left'><%= link_to model.name, model_operations_path(model) %></td>
         <td class='text-center'><%= model.sewing %></td>
         <td class='text-center'><%= model.cost %></td>
         <td>

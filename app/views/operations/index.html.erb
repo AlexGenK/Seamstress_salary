@@ -1,0 +1,45 @@
+<h2>Список операций для модели <%= @model.number %></h2>
+<h3><%= @model.name %></h3>
+
+<%= link_to new_model_operation_path(@model), class: "btn btn-primary" do %>
+  <i class="fas fa-plus"></i> Добавить операцию
+<% end %>
+</br>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>N</th>
+      <th class='text-center'>Наименование</th>
+      <th class='text-center'>Тип</th>
+      <th class='text-center'>Разряд</th>
+      <th class='text-center'>Время</th>
+      <th class='text-center'>Стоимость</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @operations.each do |operation| %>
+      <tr>
+        <td class='text-center'><%= operation.number %></td>
+        <td class='text-center'><%= operation.name %></td>
+        <td class='text-center'><%= operation.kind %></td>
+        <td class='text-center'><%= operation.category %></td>
+        <td class='text-center'><%= operation.time %></td>
+        <td class='text-center'><%= operation.cost %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to edit_model_operation_path(@model, operation), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to model_operation(@model, operation), method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить разряд?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
