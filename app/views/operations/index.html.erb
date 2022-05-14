@@ -34,7 +34,7 @@
             <% end %>
             <%= link_to model_operation_path(@model, operation), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить разряд?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить операцию #{operation.number}?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
           </div>

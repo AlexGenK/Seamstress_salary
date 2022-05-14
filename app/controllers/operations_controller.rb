@@ -42,6 +42,11 @@ class OperationsController < ApplicationController
     end
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить операцию' unless @operation.destroy
+    redirect_to model_operations_path(@model)
+  end
+
   private
 
   def set_model
