@@ -35,7 +35,7 @@ class OperationsController < ApplicationController
         render :edit
       end
       @operation.save
-      redirect_to model_operations_path(@model)
+      redirect_to model_operations_path(@model, anchor: "operation-#{@operation.id}")
     else
       flash[:alert] = 'Невозможно отредактировать операцию'
       render :edit

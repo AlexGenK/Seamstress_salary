@@ -20,7 +20,7 @@
   <tbody>
     <% @operations.each do |operation| %>
       <tr>
-        <td class='text-center'><%= operation.number %></td>
+        <td class='text-center' id='<%= "operation-#{operation.id}" %>'><%= operation.number %></td>
         <td class='text-left'><%= operation.name %></td>
         <td class='text-center'><%= operation.kind %></td>
         <td class='text-center'><%= operation.category %></td>
