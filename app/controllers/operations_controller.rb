@@ -1,6 +1,7 @@
 class OperationsController < ApplicationController
   before_action :set_model
   before_action :set_operation, only: [:edit, :update, :destroy]
+  after_action :recalculate_model_cost, only: [:create, :update, :destroy]
 
   def index
     flash[:alert] = nil
@@ -55,6 +56,10 @@ class OperationsController < ApplicationController
 
   def set_operation
     @operation = Operation.find(params[:id])
+  end
+
+  def recalculate_model_cost
+    @model.calculate_cost
   end
 
   def operation_params
