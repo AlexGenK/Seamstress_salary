@@ -1,5 +1,6 @@
 class OperationsController < ApplicationController
   before_action :set_model
+  before_action :set_operation, only: [:edit, :update, :destroy]
 
   def index
     flash[:alert] = nil
@@ -24,10 +25,31 @@ class OperationsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @operation.update(operation_params)
+      unless @operation.calc_cost!
+        flash[:alert] = 'Невозможно рассчитать стоимость операции'
+        render :edit
+      end
+      @operation.save
+      redirect_to model_operations_path(@model)
+    else
+      flash[:alert] = 'Невозможно отредактировать операцию'
+      render :edit
+    end
+  end
+
   private
 
   def set_model
     @model = Model.find(params[:model_id])
+  end
+
+  def set_operation
+    @operation = Operation.find(params[:id])
   end
 
   def operation_params
