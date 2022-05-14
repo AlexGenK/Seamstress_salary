@@ -35,6 +35,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle <%= (controller_name == 'factors') ||
                                                      (controller_name == 'ranks') ||
+                                                     (controller_name == 'operations') ||
                                                      (controller_name == 'models') ? 'active' : '' %>" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Справочники
               </a>
@@ -43,7 +44,8 @@
                   <%= link_to "Разряды", ranks_path, class: "dropdown-item #{controller_name == 'ranks' ? 'active' : ''}" %>
                 </li>
                 <li>
-                  <%= link_to "Модели", models_path, class: "dropdown-item #{controller_name == 'models' ? 'active' : ''}" %>
+                  <%= link_to "Модели", models_path, class: "dropdown-item #{controller_name == 'models' ||
+                                                                             controller_name == 'operations' ? 'active' : ''}" %>
                 </li>
                 <li>
                   <%= link_to "Коэффициенты премии", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
