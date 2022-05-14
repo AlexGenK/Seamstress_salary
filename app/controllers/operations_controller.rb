@@ -3,7 +3,7 @@ class OperationsController < ApplicationController
 
   def index
     flash[:alert] = nil
-    @operations = @model.operations.order(:number)
+    @operations = @model.operations.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')"))
   end
 
   def new
