@@ -48,6 +48,11 @@ class OperationsController < ApplicationController
     redirect_to model_operations_path(@model)
   end
 
+  def filling
+    flash[:notice] = 'Операции успешно загружены'
+    redirect_to model_operations_path(@model)
+  end
+
   private
 
   def set_model

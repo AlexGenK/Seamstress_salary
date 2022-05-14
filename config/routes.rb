@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :factors
   resources :ranks
   resources :models do
-    resources :operations
+    resources :operations do
+      post 'filling', on: :collection
+    end
   end
 
   resources :users

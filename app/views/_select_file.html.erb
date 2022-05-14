@@ -1,0 +1,11 @@
+<%= form_tag(operation, multipart: true, class: 'row') do %>
+  <div class="col">
+    	<%= file_field_tag :datafile, class: 'form-control' %>
+  </div>
+  <div class="col">
+    <%= button_tag(class: 'btn btn-primary', 
+    data: { disable_with: '<span class="spinner-border spinner-border-sm"></span> Зачекайте...'.html_safe}) do %>
+      <i class="fas fa-file-upload"></i> Загрузить файл
+    <% end %>
+  </div>
+<% end %>
