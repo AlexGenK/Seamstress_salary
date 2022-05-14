@@ -2,7 +2,8 @@ class OperationsController < ApplicationController
   before_action :set_model
 
   def index
-    @operations = @model.operations.all.order(:number)
+    flash[:alert] = nil
+    @operations = @model.operations.order(:number)
   end
 
   def new
@@ -11,6 +12,10 @@ class OperationsController < ApplicationController
 
   def create
     @operation = @model.operations.new(operation_params)
+    unless @operation.calc_cost!
+      flash[:alert] = 'Невозможно рассчитать стоимость операции'
+      render :new
+    end
     if @operation.save
       redirect_to model_operations_path(@model)
     else
