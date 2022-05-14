@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th class='text-center'>N</th>
-      <th class='text-center'>Наименование</th>
+      <th class='text-left'>Наименование</th>
       <th class='text-center'>Тип</th>
       <th class='text-center'>Разряд</th>
       <th class='text-center'>Время</th>
@@ -21,7 +21,7 @@
     <% @operations.each do |operation| %>
       <tr>
         <td class='text-center'><%= operation.number %></td>
-        <td class='text-center'><%= operation.name %></td>
+        <td class='text-left'><%= operation.name %></td>
         <td class='text-center'><%= operation.kind %></td>
         <td class='text-center'><%= operation.category %></td>
         <td class='text-center'><%= operation.time %></td>
@@ -32,7 +32,7 @@
               class: "btn btn-outline-dark btn-sm" do %>
               <i class="fas fa-edit"></i>
             <% end %>
-            <%= link_to model_operation(@model, operation), method: :delete, 
+            <%= link_to model_operation_path(@model, operation), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
               data: {confirm: "Вы уверенны, что хотите удалить разряд?"} do %>
               <i class="fas fa-times">&nbsp;</i>
