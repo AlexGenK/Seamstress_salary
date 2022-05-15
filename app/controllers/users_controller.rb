@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy, :edit]
 
   def index
-    @users = User.order(:email)
+    @users = User.order(:name)
   end
 
   def edit
