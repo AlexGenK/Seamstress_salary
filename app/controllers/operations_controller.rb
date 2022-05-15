@@ -1,10 +1,9 @@
 class OperationsController < ApplicationController
   before_action :set_model
   before_action :set_operation, only: [:edit, :update, :destroy]
-  after_action :recalculate_model_cost, only: [:create, :update, :destroy]
+  after_action :recalculate_model_cost, only: [:create, :update, :destroy, :filling]
 
   def index
-    flash[:alert] = nil
     @operations = @model.operations.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')"))
   end
 
@@ -49,7 +48,15 @@ class OperationsController < ApplicationController
   end
 
   def filling
-    flash[:notice] = 'Операции успешно загружены'
+    begin
+      @imported_records = ReadCsvFileService.call(params[:datafile], [:number, :name, :kind, :category, :time])
+      @records_to_operations = ModifyHashService.to_operations(@imported_records)
+      @counter = MassCreateOperationsQuery.call(@model, @records_to_operations)
+    rescue
+      flash[:alert] = 'Не удалось загрузить операции'
+    else
+      flash[:notice] = 'Операции успешно загружены'
+    end
     redirect_to model_operations_path(@model)
   end
 
