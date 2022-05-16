@@ -1,5 +1,7 @@
-<h3>Табель на <%= @timesheet.date %></h3>
-
+<h3>Табель на <%= @timesheet.date.strftime('%d.%m.%Y') %></h3>
+<%= link_to timesheets_path, class: "btn btn-secondary m-2" do %>
+  <i class="fas fa-undo-alt"></i> Вернуться
+<% end %>
 <table class="table table-striped table-sm">
   <thead>
     <tr>
@@ -11,15 +13,15 @@
   <tbody>
     <% @visits.each do |visit| %>
       <tr>
-        <td class='text-center'><%= visit.name %></td>
+        <td class='text-center'><%= visit.user_name %></td>
         <td class='text-center'><%= visit.time %></td>
         <td>
           <div class="btn-group">
-            <%= link_to edit_visit_path(visit), 
+            <%= link_to edit_timesheet_visit_path(@timesheet, visit), 
               class: "btn btn-outline-dark btn-sm" do %>
               <i class="fas fa-edit"></i>
             <% end %>
-            <%= link_to visit, method: :delete, 
+            <%= link_to timesheet_visit_path(@timesheet, visit), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
               data: {confirm: "Вы уверенны, что хотите удалить информацию о сотруднике #{visit.user_name}?"} do %>
               <i class="fas fa-times">&nbsp;</i>

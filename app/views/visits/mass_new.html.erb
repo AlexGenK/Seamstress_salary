@@ -1,0 +1,22 @@
+<h3>Новый табель на <%= @timesheet.date %></h3>
+<%= form_tag mass_create_timesheet_visits_path(@timesheet) do %>
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th class='text-center'>Сотрудник</th>
+        <th class='text-center'>Время</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td class='text-center'><%= user.name %> <%= hidden_field_tag :visit_user_name, user.name, name: "visits[][user_name]" %></td>
+          <td class='text-center'><%= number_field_tag :visit_time, 0, name: "visits[][time]" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <%= submit_tag "Submit" %>
+<% end %>

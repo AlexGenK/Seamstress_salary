@@ -6,7 +6,10 @@ Rails.application.routes.draw do
   resources :ranks
 
   resources :timesheets do
-    resources :visits
+    resources :visits do
+      get 'mass_new', on: :collection
+      post 'mass_create', on: :collection
+    end
   end
   
   resources :models do

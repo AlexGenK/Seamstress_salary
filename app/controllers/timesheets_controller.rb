@@ -9,7 +9,7 @@ class TimesheetsController < ApplicationController
   def create
     @timesheet = Timesheet.new(timesheet_params)
     flash[:alert] = 'Невозможно добавить табель' unless @timesheet.save
-    redirect_to timesheets_path
+    redirect_to mass_new_timesheet_visits_path(@timesheet)
   end
 
   def destroy
