@@ -14,11 +14,13 @@ class VisitsController < ApplicationController
     params[:visits].each do |params|
       @timesheet.visits.create(user_name: params[:user_name], time: params[:time].to_i)
     end
+    @timesheet.calculate_sum
     redirect_to timesheet_visits_path(@timesheet)
   end
 
   def destroy
     flash[:alert] = 'Невозможно удалить сведения' unless @visit.destroy
+    @timesheet.calculate_sum
     redirect_to timesheet_visits_path(@timesheet)
   end
 
