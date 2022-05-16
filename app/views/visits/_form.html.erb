@@ -2,7 +2,7 @@
   <div class="row py-2">
     <div class="col-auto">
       <%= f.label :user_name, "Сотрудник", class: "form-label" %>
-      <%= f.select :user_name, @user_names, {}, {class: 'form-select'} %>
+      <%= f.select :user_name, @user_names, {}, {class: 'form-select', disabled: (style == :edit)} %>
     </div>
     <div class="col-auto">
       <%= f.label :time, "Время", class: "form-label" %>
@@ -10,7 +10,7 @@
     </div>
   </div>
   <div class="row py-2">
-    <div class="col">
+    <div class="col-auto">
       <%= f.button type: 'submit', class: "btn btn-primary" do %>
         <i class="fas fa-save"></i> Сохранить
       <% end %>

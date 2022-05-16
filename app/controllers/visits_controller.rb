@@ -1,6 +1,6 @@
 class VisitsController < ApplicationController
   before_action :set_timesheet
-  before_action :set_visit, only: [:destroy]
+  before_action :set_visit, only: [:destroy, :edit, :update]
 
   def index
     @visits = @timesheet.visits.order(:user_name)
@@ -43,6 +43,20 @@ class VisitsController < ApplicationController
     flash[:alert] = 'Невозможно удалить сведения' unless @visit.destroy
     @timesheet.calculate_sum
     redirect_to timesheet_visits_path(@timesheet)
+  end
+
+  def edit
+    @user_names = User.where({worker_role: true}).order(:name).pluck(:name)
+  end
+
+  def update
+    if @visit.update(visit_params)
+      @timesheet.calculate_sum
+      redirect_to timesheet_visits_path(@timesheet)
+    else
+      flash[:alert] = 'Невозможно отредактировать данные сотрудника'
+      render :edit
+    end
   end
 
   private

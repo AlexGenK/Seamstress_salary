@@ -1,0 +1,3 @@
+<h3>Изменить данные сотрудника в табеле за <%= @timesheet.date.strftime('%d.%m.%Y') %>:</h3>
+
+<%= render 'form', timesheet: @timesheet, visit: @visit, style: :edit %>
