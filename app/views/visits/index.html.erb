@@ -1,4 +1,7 @@
 <h3>Табель на <%= @timesheet.date.strftime('%d.%m.%Y') %></h3>
+<%= link_to new_timesheet_visit_path(@timesheet), class: "btn btn-primary" do %>
+  <i class="fas fa-plus"></i> Добавить сотрудника
+<% end %>
 <%= link_to timesheets_path, class: "btn btn-secondary m-2" do %>
   <i class="fas fa-undo-alt"></i> Вернуться
 <% end %>
@@ -6,7 +9,7 @@
   <thead>
     <tr>
       <th class='text-center'>Сотрудник</th>
-      <th class='text-center'>Общее время</th>
+      <th class='text-center'>Время</th>
       <th></th>
     </tr>
   </thead>

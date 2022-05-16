@@ -1,0 +1,3 @@
+<h3>Добавить сотрудника в табель за <%= @timesheet.date.strftime('%d.%m.%Y') %>:</h3>
+
+<%= render 'form', timesheet: @timesheet, visit: @visit %>

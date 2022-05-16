@@ -18,6 +18,27 @@ class VisitsController < ApplicationController
     redirect_to timesheet_visits_path(@timesheet)
   end
 
+  def new
+    @user_names = User.where({worker_role: true}).order(:name).pluck(:name)
+    @visit = @timesheet.visits.new
+  end
+
+  def create
+    unless Visit.find_by(timesheet_id: @timesheet.id, user_name: visit_params[:user_name]) == nil
+      flash[:alert] = 'Невозможно добавить уже существующего в табеле сотрудника'
+      redirect_to timesheet_visits_path(@timesheet)
+      return
+    end
+    @visit = @timesheet.visits.new(visit_params)
+    if @visit.save
+      @timesheet.calculate_sum
+      redirect_to timesheet_visits_path(@timesheet)
+    else
+      flash[:alert] = 'Невозможно добавить сотрудника'
+      render :new
+    end
+  end
+
   def destroy
     flash[:alert] = 'Невозможно удалить сведения' unless @visit.destroy
     @timesheet.calculate_sum
@@ -25,6 +46,10 @@ class VisitsController < ApplicationController
   end
 
   private
+
+  def visit_params
+    params.require(:visit).permit(:user_name, :time)
+  end
 
   def set_timesheet
     @timesheet = Timesheet.find(params[:timesheet_id])
