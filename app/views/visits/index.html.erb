@@ -1,0 +1,32 @@
+<h3>Табель на <%= @timesheet.date %></h3>
+
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Сотрудник</th>
+      <th class='text-center'>Время</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @visits.each do |visit| %>
+      <tr>
+        <td class='text-center'><%= visit.name %></td>
+        <td class='text-center'><%= visit.time %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to edit_visit_path(visit), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to visit, method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить информацию о сотруднике #{visit.user_name}?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

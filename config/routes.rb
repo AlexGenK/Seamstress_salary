@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   resources :productions
   resources :factors
   resources :ranks
-  resources :timesheets
+
+  resources :timesheets do
+    resources :visits
+  end
+  
   resources :models do
     resources :operations do
       post 'filling', on: :collection
