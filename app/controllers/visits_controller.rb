@@ -1,5 +1,6 @@
 class VisitsController < ApplicationController
   before_action :set_timesheet
+  before_action :set_visit, only: [:destroy]
 
   def index
     @visits = @timesheet.visits.order(:user_name)
@@ -16,9 +17,18 @@ class VisitsController < ApplicationController
     redirect_to timesheet_visits_path(@timesheet)
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить сведения' unless @visit.destroy
+    redirect_to timesheet_visits_path(@timesheet)
+  end
+
   private
 
   def set_timesheet
     @timesheet = Timesheet.find(params[:timesheet_id])
+  end
+
+  def set_visit
+    @visit = Visit.find(params[:id])
   end
 end
