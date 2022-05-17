@@ -4,7 +4,7 @@ class ProductionsController < ApplicationController
   def index
     @production = Production.new(date: Date.today)
     @productions = Production.order(date: :desc, user_name: :asc)
-    @user_names = User.where({worker_role: true}).order(:name).pluck(:name)
+    @user_names = User.get_worker_names
   end
 
   def create

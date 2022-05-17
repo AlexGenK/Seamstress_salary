@@ -9,4 +9,8 @@ class User < ApplicationRecord
   def is_last_admin?
     (self.admin_role?) && (User.where(admin_role: true).count <= 1)
   end
+
+  def self.get_worker_names
+    User.where({worker_role: true}).order(:name).pluck(:name)
+  end
 end

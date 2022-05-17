@@ -19,7 +19,7 @@ class VisitsController < ApplicationController
   end
 
   def new
-    @user_names = User.where({worker_role: true}).order(:name).pluck(:name)
+    @user_names = User.get_worker_names
     @visit = @timesheet.visits.new
   end
 
