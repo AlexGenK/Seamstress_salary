@@ -1,1 +1,43 @@
 <h2>Отчеты по выработке</h2>
+<%= form_for @production, html: {class: "row"} do |f| %>
+  <div class='col-auto'>
+    <%= f.button type: 'submit', class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> Добавить отчет
+    <% end %>
+  </div>
+  <div class='col-auto'>
+    <%= f.label :user_name, "для сотрудника", class: "col-form-label" %>
+  </div>
+  <div class='col-auto'>
+    <%= f.select :user_name, @user_names, {}, {class: 'form-select'} %>
+  </div>
+  <div class='col-auto'>
+    <%= f.label :date, "на дату", class: "col-form-label" %>
+  </div>
+  <div class='col-auto'>
+    <%= f.date_field :date, class: 'form-control' %>
+  </div>
+<% end %>
+<br>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Сотрудник</th>
+      <th class='text-center'>Дата</th>
+      <th class='text-center'>Сумма</th>
+      <th class='text-center'>Время</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @productions.each do |production| %>
+      <tr>
+        <td class='text-center'><%= production.user_name %></td>
+        <td class='text-center'><%= production.date %></td>
+        <td class='text-center'><%= production.sum %></td>
+        <td class='text-center'><%= production.time %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
