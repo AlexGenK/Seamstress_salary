@@ -1,0 +1,24 @@
+<h4>Отчет по выработке <b><%= @production.user_name %></b> за <b><%= @production.date.strftime('%d.%m.%Y') %></b></h4>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Модель</th>
+      <th class='text-center'>Наименование</th>
+      <th class='text-center'>Сумма</th>
+      <th class='text-center'>Время</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @works.each do |work| %>
+      <tr>
+        <td class='text-center'><%= work.model.number %></td>
+        <td class='text-center'><%= work.model.name %></td>
+        <td class='text-center'><%= work.sum %></td>
+        <td class='text-center'><%= work.time %></td>
+        <td>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
