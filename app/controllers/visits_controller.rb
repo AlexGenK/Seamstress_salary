@@ -1,6 +1,7 @@
 class VisitsController < ApplicationController
   before_action :set_timesheet
   before_action :set_visit, only: [:destroy, :edit, :update]
+  after_action :recalculate_timesheet_sum, only: [:create, :mass_create, :destroy, :update]
 
   def index
     @visits = @timesheet.visits.order(:user_name)
@@ -14,7 +15,6 @@ class VisitsController < ApplicationController
     params[:visits].each do |params|
       @timesheet.visits.create(user_name: params[:user_name], time: params[:time].to_i)
     end
-    @timesheet.calculate_sum
     redirect_to timesheet_visits_path(@timesheet)
   end
 
@@ -31,7 +31,6 @@ class VisitsController < ApplicationController
     end
     @visit = @timesheet.visits.new(visit_params)
     if @visit.save
-      @timesheet.calculate_sum
       redirect_to timesheet_visits_path(@timesheet)
     else
       flash[:alert] = 'Невозможно добавить сотрудника'
@@ -41,7 +40,6 @@ class VisitsController < ApplicationController
 
   def destroy
     flash[:alert] = 'Невозможно удалить сведения' unless @visit.destroy
-    @timesheet.calculate_sum
     redirect_to timesheet_visits_path(@timesheet)
   end
 
@@ -50,8 +48,7 @@ class VisitsController < ApplicationController
   end
 
   def update
-    if @visit.update(visit_params)
-      @timesheet.calculate_sum
+    if @visit.update(visit_params)      
       redirect_to timesheet_visits_path(@timesheet)
     else
       flash[:alert] = 'Невозможно отредактировать данные сотрудника'
@@ -60,6 +57,10 @@ class VisitsController < ApplicationController
   end
 
   private
+
+  def recalculate_timesheet_sum
+    @timesheet.calculate_sum
+  end
 
   def visit_params
     params.require(:visit).permit(:user_name, :time)
