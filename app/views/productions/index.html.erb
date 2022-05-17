@@ -36,7 +36,19 @@
         <td class='text-center'><%= production.date %></td>
         <td class='text-center'><%= production.sum %></td>
         <td class='text-center'><%= production.time %></td>
-        <td></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to edit_production_path(production), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to production_path(production), method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить отчет?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
