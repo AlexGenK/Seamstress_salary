@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_054440) do
+ActiveRecord::Schema.define(version: 2022_05_17_080928) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,19 @@ ActiveRecord::Schema.define(version: 2022_05_17_054440) do
     t.index ["timesheet_id"], name: "index_visits_on_timesheet_id"
   end
 
+  create_table "works", force: :cascade do |t|
+    t.decimal "sum", precision: 10, scale: 3
+    t.decimal "time", precision: 10, scale: 3
+    t.bigint "production_id", null: false
+    t.bigint "model_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["model_id"], name: "index_works_on_model_id"
+    t.index ["production_id"], name: "index_works_on_production_id"
+  end
+
   add_foreign_key "operations", "models"
   add_foreign_key "visits", "timesheets"
+  add_foreign_key "works", "models"
+  add_foreign_key "works", "productions"
 end
