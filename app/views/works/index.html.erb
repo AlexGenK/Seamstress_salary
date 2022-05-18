@@ -9,9 +9,9 @@
     <%= f.select :model_id, Model.all.order(:number).collect {|m| ["#{m.number} - #{m.name}", m.id]}, {}, {class: 'form-select'} %>
   </div>
   <div class='col-auto'>
-  	<%= link_to productions_path, class: "btn btn-secondary" do %>
-  		<i class="fas fa-undo-alt"></i> Вернуться
-	<% end %>
+    <%= link_to productions_path, class: "btn btn-secondary" do %>
+      <i class="fas fa-undo-alt"></i> Вернуться
+  <% end %>
   </div>
 <% end %>
 
@@ -33,6 +33,17 @@
         <td class='text-center'><%= work.sum %></td>
         <td class='text-center'><%= work.time %></td>
         <td>
+          <div class="btn-group">
+            <%= link_to edit_production_work_path(@production, work), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to production_work_path(@production, work), method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить информацию о модели #{work.model.number}?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+        </div>
         </td>
       </tr>
     <% end %>

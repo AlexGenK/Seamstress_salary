@@ -1,5 +1,6 @@
 class WorksController < ApplicationController
   before_action :set_production
+  before_action :set_work, only: [:destroy]
 
   def index
     @work = @production.works.new
@@ -12,6 +13,11 @@ class WorksController < ApplicationController
     redirect_to production_works_path(@production)
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить сведения' unless @work.destroy
+    redirect_to production_works_path(@production)
+  end
+
   private
 
   def work_params
@@ -20,5 +26,9 @@ class WorksController < ApplicationController
 
   def set_production
     @production = Production.find(params[:production_id])
+  end
+
+  def set_work
+    @work = Work.find(params[:id])
   end
 end
