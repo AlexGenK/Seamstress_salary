@@ -2,11 +2,6 @@
 <h5>Модель <b><%= "#{@work.model.number} #{@work.model.name}" %></b></h5>
 <%= form_for [@production,@work, @execution], html: {class: "row"} do |f| %>
   <div class='col-auto'>
-    <%= f.button type: 'submit', class: "btn btn-primary" do %>
-      <i class="fas fa-plus"></i> Добавить операцию
-    <% end %>
-  </div>
-  <div class='col-auto'>
     <%= f.select :operation_id, @oper_list, {}, {class: 'form-select'} %>
   </div>
   <div class='col-auto'>
@@ -14,6 +9,11 @@
   </div>
   <div class='col-auto'>
     <%= f.number_field :quantity, class: 'form-control' %>
+  </div>
+  <div class='col-auto'>
+    <%= f.button type: 'submit', class: "btn btn-primary" do %>
+      <i class="fas fa-plus"></i> Добавить операцию
+    <% end %>
   </div>
   <div class='col-auto'>
     <%= link_to production_works_path(@production), class: "btn btn-secondary" do %>
