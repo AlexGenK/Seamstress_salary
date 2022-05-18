@@ -1,6 +1,6 @@
 class Execution < ApplicationRecord
   validates :quantity, :sum, :time, presence: true
 
-  belongs_to :works
-  belongs_to :operations
+  belongs_to :work
+  belongs_to :operation
 end
