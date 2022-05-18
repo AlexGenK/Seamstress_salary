@@ -1,6 +1,8 @@
 class WorksController < ApplicationController
   before_action :set_production
   before_action :set_work, only: [:destroy]
+  after_action :recalculate_production_sum, only: [:create, :destroy]
+  after_action :recalculate_production_time, only: [:create, :destroy]
 
   def index
     @work = @production.works.new
@@ -30,5 +32,13 @@ class WorksController < ApplicationController
 
   def set_work
     @work = Work.find(params[:id])
+  end
+
+  def recalculate_production_sum
+    @production.calculate_sum
+  end
+
+  def recalculate_production_time
+    @production.calculate_time
   end
 end

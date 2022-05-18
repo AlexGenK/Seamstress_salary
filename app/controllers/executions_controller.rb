@@ -2,6 +2,8 @@ class ExecutionsController < ApplicationController
   before_action :set_production
   before_action :set_work
   before_action :set_execution, only: [:destroy]
+  after_action :recalculate_work_sum, only: [:create, :destroy]
+  after_action :recalculate_work_time, only: [:create, :destroy]
 
   def index
     @executions = @work.executions.all
@@ -38,5 +40,13 @@ class ExecutionsController < ApplicationController
 
   def execution_params
     params.require(:execution).permit(:operation_id, :quantity, :sum, :time)
+  end
+
+  def recalculate_work_sum
+    @work.calculate_sum
+  end
+
+  def recalculate_work_time
+    @work.calculate_time
   end
 end
