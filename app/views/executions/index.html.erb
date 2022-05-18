@@ -46,7 +46,7 @@
             <% end %>
             <%= link_to production_work_execution_path(@production, @work, execution), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить информацию о выполненной операции?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить информацию о выполненной операции N#{execution.operation.number}?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
         </div>
