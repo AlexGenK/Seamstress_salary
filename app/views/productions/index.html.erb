@@ -33,7 +33,7 @@
     <% @productions.each do |production| %>
       <tr>
         <td class='text-center'><%= production.user_name %></td>
-        <td class='text-center'><%= production.date %></td>
+        <td class='text-center'><%= link_to production.date, production_path(production) %></td>
         <td class='text-center'><%= production.sum %></td>
         <td class='text-center'><%= production.time %></td>
         <td>

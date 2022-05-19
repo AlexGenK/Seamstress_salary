@@ -1,5 +1,5 @@
 class ProductionsController < ApplicationController
-  before_action :set_production, only: [:destroy]
+  before_action :set_production, only: [:destroy, :show]
 
   def index
     @production = Production.new(date: Date.today)
@@ -16,6 +16,9 @@ class ProductionsController < ApplicationController
   def destroy
     flash[:alert] = 'Невозможно удалить отчет по выработке' unless @production.destroy
     redirect_to productions_path
+  end
+
+  def show
   end
 
   private
