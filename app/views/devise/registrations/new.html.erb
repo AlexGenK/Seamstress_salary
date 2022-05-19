@@ -1,39 +1,52 @@
-<h2>Sign up</h2>
+<h2>Регистрация пользователя</h2>
+<br />
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+  <div class="form-group row mb-2">
+    <%= f.label :name, "Имя", class: "col-lg-2 col-form-label" %>
+    <div class='col-lg-5'>
+      <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "form-control" %>
+      <div class="invalid-feedback">уже существует</div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autocomplete: "email" %>
+  <div class="form-group row mb-2">
+    <%= f.label :email, "Email", class: "col-lg-2 col-form-label" %>
+    <div class='col-lg-5'>
+      <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
+      <div class="invalid-feedback">уже существует</div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :team %><br />
-    <%= f.text_field :team, autocomplete: "team" %>
+  <div class="form-group row mb-2">
+    <%= f.label :password, class: "col-lg-2 col-form-label" do %>
+      Пароль
+      <% if @minimum_password_length %>
+      <em>(минимум <%= @minimum_password_length %> символов)</em>
+      <% end %>
+    <% end %>
+    <div class='col-lg-5'>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+      <div class="invalid-feedback">некорректний пароль</div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div class="form-group row mb-2">
+    <%= f.label :password_confirmation, "Подтверждение пароля", class: "col-lg-2 col-form-label" %>
+    <div class='col-lg-5'>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      <div class="invalid-feedback">пароль не совпадает</div>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="form-row mb-2">
+      <%= f.button type: 'submit', class: "btn btn-primary" do %>
+        <i class="fas fa-save"></i> Зарегистроваться
+      <% end %>
+      <%= link_to users_path, class: "btn btn-secondary" do %>
+        <i class="fas fa-undo-alt"></i> Вернуться
+      <% end %>
   </div>
 <% end %>
-
-<%= render "devise/shared/links" %>
