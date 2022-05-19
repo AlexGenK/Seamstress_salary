@@ -6,7 +6,7 @@ class ExecutionsController < ApplicationController
   after_action :recalculate_work_time, only: [:create, :destroy]
 
   def index
-    @executions = @work.executions.all
+    @executions = @work.executions.includes(:operation).order('operations.id')
     @execution = @work.executions.new
     @oper_list = @work.model.operations.all.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')")).collect {|o| ["#{o.number} - #{o.name.truncate(50)}", o.id]}
   end
