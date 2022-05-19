@@ -12,10 +12,14 @@ class ExecutionsController < ApplicationController
   end
 
   def create
-    @execution = @work.executions.new(execution_params)
-    @execution.sum = @execution.operation.cost * @execution.quantity
-    @execution.time = @execution.operation.time * @execution.quantity
-    flash[:alert] = 'Невозможно добавить выполнение' unless @execution.save
+    unless @work.executions.find_by(operation_id: execution_params[:operation_id]) == nil
+      flash[:alert] = 'Невозможно добавить уже существующую операцию'
+    else
+      @execution = @work.executions.new(execution_params)
+      @execution.sum = @execution.operation.cost * @execution.quantity
+      @execution.time = @execution.operation.time * @execution.quantity
+      flash[:alert] = 'Невозможно добавить выполнение' unless @execution.save
+    end
     redirect_to production_work_executions_path(@production, @work)
   end
 
