@@ -1,0 +1,2 @@
+class SreportController < ApplicationController
+end

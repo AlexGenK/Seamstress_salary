@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :sreport, controller: 'sreport'
+
   resources :users
 
   root to: 'productions#index'

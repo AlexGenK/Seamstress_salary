@@ -71,7 +71,7 @@
                 Отчеты
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><a class="dropdown-item" href="#">ЗП и время</a></li>
+                <li><%= link_to "ЗП и время", edit_sreport_path, class: "dropdown-item #{controller_name == 'sreport' ? 'active' : ''}" %></li>
                 <li><a class="dropdown-item" href="#">Операции</a></li>
               </ul>
             </li>
