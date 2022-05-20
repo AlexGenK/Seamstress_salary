@@ -6,11 +6,14 @@ class WorksController < ApplicationController
 
   def index
     @work = @production.works.new
-    @works = @production.works.all
+    @works = @production.works.all.order(:model_number)
   end
 
   def create
     @work = @production.works.new(work_params)
+    @model = Model.find(work_params[:model_id])
+    @work.model_nname = @model.name
+    @work.model_number = @model.number
     flash[:alert] = 'Невозможно добавить модель' unless @work.save
     redirect_to production_works_path(@production)
   end

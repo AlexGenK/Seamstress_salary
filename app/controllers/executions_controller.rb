@@ -8,7 +8,7 @@ class ExecutionsController < ApplicationController
   def index
     @executions = @work.executions.order(Arel.sql("(substring(operation_number, '^[0-9]+'))::int, substring(concat(operation_number, '!'), '[^0-9_].*$')"))
     @execution = @work.executions.new
-    @oper_list = @work.model.operations.all.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')")).collect {|o| ["#{o.number} - #{o.name.truncate(50)}", o.id]}
+    @oper_list = Model.find(@work.model_id).operations.all.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')")).collect {|o| ["#{o.number} - #{o.name.truncate(50)}", o.id]}
   end
 
   def create

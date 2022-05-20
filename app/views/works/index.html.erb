@@ -28,8 +28,8 @@
   <tbody>
     <% @works.each do |work| %>
       <tr>
-        <td class='text-center'><%= work.model.number %></td>
-        <td class='text-left'><%= work.model.name %></td>
+        <td class='text-center'><%= work.model_number %></td>
+        <td class='text-left'><%= work.model_nname %></td>
         <td class='text-center'><%= work.sum %></td>
         <td class='text-center'><%= work.time %></td>
         <td>
@@ -40,7 +40,7 @@
             <% end %>
             <%= link_to production_work_path(@production, work), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить информацию о модели #{work.model.number}?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить информацию о модели #{work.model_number}?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
         </div>
@@ -52,6 +52,7 @@
       <th class='text-center'></th>
       <th class='text-center'><%= @production.sum %></th>
       <th class='text-center'><%= @production.time %></th>
+      <th></th>
     </tr>
   </tbody>
 </table>
