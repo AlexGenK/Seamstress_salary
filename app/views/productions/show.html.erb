@@ -12,9 +12,9 @@
       </tr>
     </thead>
     <tbody>
-      <% work.executions.includes(:operation).order('operations.id').each do |execution| %>
+      <% work.executions.order(Arel.sql("(substring(operation_number, '^[0-9]+'))::int, substring(concat(operation_number, '!'), '[^0-9_].*$')")).each do |execution| %>
         <tr>
-          <td class='text-center'><%= execution.operation.number %></td>
+          <td class='text-center'><%= execution.operation_number %></td>
           <td class='text-center'><%= execution.quantity %></td>
           <td class='text-center'><%= execution.sum %></td>
           <td class='text-center'><%= execution.time %></td>

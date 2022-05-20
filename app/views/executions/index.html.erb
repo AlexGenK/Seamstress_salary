@@ -34,7 +34,7 @@
   <tbody>
     <% @executions.each do |execution| %>
       <tr>
-        <td class='text-center'><%= execution.operation.number %></td>
+        <td class='text-center'><%= execution.operation_number %></td>
         <td class='text-center'><%= execution.quantity %></td>
         <td class='text-center'><%= execution.sum %></td>
         <td class='text-center'><%= execution.time %></td>
@@ -46,7 +46,7 @@
             <% end %>
             <%= link_to production_work_execution_path(@production, @work, execution), method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить информацию о выполненной операции N#{execution.operation.number}?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить информацию о выполненной операции N#{execution.operation_number}?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
         </div>

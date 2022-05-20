@@ -6,7 +6,7 @@ class ExecutionsController < ApplicationController
   after_action :recalculate_work_time, only: [:create, :destroy]
 
   def index
-    @executions = @work.executions.includes(:operation).order('operations.id')
+    @executions = @work.executions.order(Arel.sql("(substring(operation_number, '^[0-9]+'))::int, substring(concat(operation_number, '!'), '[^0-9_].*$')"))
     @execution = @work.executions.new
     @oper_list = @work.model.operations.all.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')")).collect {|o| ["#{o.number} - #{o.name.truncate(50)}", o.id]}
   end
@@ -16,8 +16,13 @@ class ExecutionsController < ApplicationController
       flash[:alert] = 'Невозможно добавить уже существующую операцию'
     else
       @execution = @work.executions.new(execution_params)
-      @execution.sum = @execution.operation.cost * @execution.quantity
-      @execution.time = @execution.operation.time * @execution.quantity
+      @operation = Operation.find(execution_params[:operation_id])
+      @execution.operation_number = @operation.number
+      @execution.operation_name = @operation.name
+      @execution.operation_cost = @operation.cost
+      @execution.operation_time = @operation.time
+      @execution.sum = @execution.operation_cost * @execution.quantity
+      @execution.time = @execution.operation_time * @execution.quantity
       flash[:alert] = 'Невозможно добавить выполнение' unless @execution.save
     end
     redirect_to production_work_executions_path(@production, @work)
