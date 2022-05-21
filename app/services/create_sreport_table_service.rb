@@ -4,18 +4,13 @@ class CreateSreportTableService
 
   def self.call(table_hash, models_list)
     wb = RubyXL::Workbook.new
-    ws = wb[0]
-    ws.add_cell(0, 1, 'бригада')
-    change_all_borders(ws.sheet_data[0][1], 'thin')
-    ws.add_cell(0, 2, 'Итого:')
-    change_all_borders(ws.sheet_data[0][2], 'thin')
-    ws.sheet_data[0][2].change_font_bold(:true)
+    @ws = wb[0]
+    create_cell_border(0, 1, 'бригада')
+    create_cell_bold_border(0, 2, 'Итого:')
     x = 3
     y = 0
     models_list.each do |model|
-      ws.add_cell(y, x, model)
-      ws.sheet_data[y][x].change_horizontal_alignment('center')
-      change_all_borders(ws.sheet_data[y][x], 'thin')
+      create_cell_border_center(y, x, model)
       x += 1
     end
     
@@ -27,16 +22,12 @@ class CreateSreportTableService
       users.each do |user|
         user.each do |name, works|
           y += 1
-          ws.add_cell(y, 0, name)
-          change_all_borders(ws.sheet_data[y][0], 'thin')
-          ws.add_cell(y, 1, team)
-          ws.sheet_data[y][1].change_horizontal_alignment('right')
-          change_all_borders(ws.sheet_data[y][1], 'thin')
+          create_cell_border(y, 0, name)
+          create_cell_border_right(y, 1, team)
           x = 3
           row_sum = 0
           works.each do |name, sum|
-            ws.add_cell(y, x, sum == 0 ? '' : sum)
-            change_all_borders(ws.sheet_data[y][x], 'thin')
+            create_cell_border(y, x, sum == 0 ? '' : sum)
             x +=1
             row_sum += sum
             total_team_sum += sum
@@ -51,47 +42,70 @@ class CreateSreportTableService
               col_sum[name] += sum
             end
           end
-          p team_col_sum
-          ws.add_cell(y, 2, row_sum)
-          change_all_borders(ws.sheet_data[y][2], 'thin')
-          ws.sheet_data[y][2].change_font_bold(:true)
+          create_cell_bold_border(y, 2, row_sum)
         end
       end
       total_sum += total_team_sum
       y += 1
       x = 3
-      ws.add_cell(y, 0, '')
-      change_all_borders(ws.sheet_data[y][0], 'thin')
-      ws.add_cell(y, 1, 'Всего:')
-      change_all_borders(ws.sheet_data[y][1], 'thin')
-      ws.sheet_data[y][1].change_font_bold(:true)
-      ws.sheet_data[y][1].change_horizontal_alignment('right')
-      ws.add_cell(y, 2, total_team_sum)
-      change_all_borders(ws.sheet_data[y][2], 'thin')
-      ws.sheet_data[y][2].change_font_bold(:true)
+      create_cell_border(y, 0, '')
+      create_cell_bold_border_right(y, 1, 'Всего:')
+      create_cell_bold_border(y, 2, total_team_sum)
       team_col_sum.each do |name, sum|
-        ws.add_cell(y, x, sum)
-        change_all_borders(ws.sheet_data[y][x], 'thin')
-        ws.sheet_data[y][x].change_font_bold(:true)
+        create_cell_bold_border(y, x, sum)
         x += 1
       end   
     end
     y += 1
     x = 3
-    ws.add_cell(y, 1, 'Итого:')
-    ws.sheet_data[y][1].change_font_bold(:true)
-    ws.sheet_data[y][1].change_horizontal_alignment('right')
-    ws.add_cell(y, 2, total_sum)
-    ws.sheet_data[y][2].change_font_bold(:true)
+    create_cell_bold_right(y, 1, 'Итого:')
+    create_cell_bold(y, 2, total_sum)
     col_sum.each do |name, sum|
-      ws.add_cell(y, x, sum)
-      ws.sheet_data[y][x].change_font_bold(:true)
+      create_cell_bold(y, x, sum)
       x += 1
     end
     wb
   end
 
   private
+
+  def self.create_cell_bold(y, x, content)
+    @ws.add_cell(y, x, content)
+    @ws.sheet_data[y][x].change_font_bold(:true)
+  end
+
+  def self.create_cell_bold_right(y, x, content)
+    create_cell_bold(y, x, content)
+    @ws.sheet_data[y][x].change_horizontal_alignment('right')
+  end  
+
+  def self.create_cell_border(y, x, content)
+    @ws.add_cell(y, x, content)
+    @ws.sheet_data[y][x].change_border(:left, 'thin')
+    @ws.sheet_data[y][x].change_border(:right, 'thin')
+    @ws.sheet_data[y][x].change_border(:top, 'thin')
+    @ws.sheet_data[y][x].change_border(:bottom, 'thin')
+  end
+
+  def self.create_cell_border_right(y, x, content)
+    create_cell_border(y, x, content)
+    @ws.sheet_data[y][x].change_horizontal_alignment('right')
+  end
+
+  def self.create_cell_border_center(y, x, content)
+    create_cell_border(y, x, content)
+    @ws.sheet_data[y][x].change_horizontal_alignment('center')
+  end
+
+  def self.create_cell_bold_border(y, x, content)
+    create_cell_border(y, x, content)
+    @ws.sheet_data[y][x].change_font_bold(:true)
+  end
+
+  def self.create_cell_bold_border_right(y, x, content)
+    create_cell_bold_border(y, x, content)
+    @ws.sheet_data[y][x].change_horizontal_alignment('right')
+  end
 
   def self.change_all_borders(cell, style)
     cell.change_border(:left, style)
