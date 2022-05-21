@@ -15,6 +15,6 @@ class CreateSreportHashService
 
   def self.get_worker_model_sum(scope, worker, model)
      worker_model = scope.joins(:works).where('user_name = ? AND works.model_number = ?', worker, model).select('works.sum').first
-     worker_model == nil ? 0 : worker_model.sum
+     worker_model == nil ? 0 : worker_model.sum.round
   end
 end

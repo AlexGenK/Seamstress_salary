@@ -20,7 +20,7 @@ class CreateSreportTableService
       change_all_borders(ws.sheet_data[y][0], 'thin')
         x = 1
         works.each do |name, sum|
-          ws.add_cell(y, x, sum.to_i == 0 ? '' : sum.to_i)
+          ws.add_cell(y, x, sum == 0 ? '' : sum)
           change_all_borders(ws.sheet_data[y][x], 'thin')
           x +=1
         end
