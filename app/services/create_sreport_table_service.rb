@@ -19,6 +19,8 @@ class CreateSreportTableService
       x += 1
     end
     
+    col_sum = {}
+    total_sum = 0
     table_hash.each do |team, users|
       team_col_sum = {}
       total_team_sum = 0
@@ -43,6 +45,11 @@ class CreateSreportTableService
             else 
               team_col_sum[name] += sum
             end
+            if col_sum[name] == nil
+              col_sum[name] = sum
+            else 
+              col_sum[name] += sum
+            end
           end
           p team_col_sum
           ws.add_cell(y, 2, row_sum)
@@ -50,6 +57,7 @@ class CreateSreportTableService
           ws.sheet_data[y][2].change_font_bold(:true)
         end
       end
+      total_sum += total_team_sum
       y += 1
       x = 3
       ws.add_cell(y, 0, '')
@@ -67,6 +75,18 @@ class CreateSreportTableService
         ws.sheet_data[y][x].change_font_bold(:true)
         x += 1
       end   
+    end
+    y += 1
+    x = 3
+    ws.add_cell(y, 1, 'Итого:')
+    ws.sheet_data[y][1].change_font_bold(:true)
+    ws.sheet_data[y][1].change_horizontal_alignment('right')
+    ws.add_cell(y, 2, total_sum)
+    ws.sheet_data[y][2].change_font_bold(:true)
+    col_sum.each do |name, sum|
+      ws.add_cell(y, x, sum)
+      ws.sheet_data[y][x].change_font_bold(:true)
+      x += 1
     end
     wb
   end
