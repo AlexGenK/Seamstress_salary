@@ -9,7 +9,7 @@
     <%= f.label :date, "на дату", class: "col-form-label" %>
   </div>
   <div class='col-auto'>
-    <%= f.date_field :date, class: 'form-control' %>
+    <%= f.date_field :date, Date.today, class: 'form-control' %>
   </div>
 <% end %>
 </br>
@@ -24,7 +24,7 @@
   <tbody>
     <% @timesheets.each do |timesheet| %>
       <tr>
-        <td class='text-center'><%= link_to l(timesheet.date, format: '%B %Y'), timesheet_visits_path(timesheet) %></td>
+        <td class='text-center'><%= link_to timesheet.date, timesheet_visits_path(timesheet) %></td>
         <td class='text-center'><%= timesheet.sum %></td>
         <td>
           <div class="btn-group">
