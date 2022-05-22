@@ -23,6 +23,7 @@
   <thead>
     <tr>
       <th class='text-center'>Сотрудник</th>
+      <th class='text-center'>Бригада</th>
       <th class='text-center'>Дата</th>
       <th class='text-center'>Сумма</th>
       <th class='text-center'>Время</th>
@@ -33,6 +34,7 @@
     <% @productions.each do |production| %>
       <tr>
         <td class='text-center'><%= production.user_name %></td>
+        <td class='text-center'><%= production.team %></td>
         <td class='text-center'><%= link_to production.date, production_path(production) %></td>
         <td class='text-center'><%= production.sum %></td>
         <td class='text-center'><%= production.time %></td>

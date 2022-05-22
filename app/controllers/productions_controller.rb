@@ -9,6 +9,7 @@ class ProductionsController < ApplicationController
 
   def create
     @production = Production.new(production_params)
+    @production.team = User.find_by(name: @production.user_name).team
     flash[:alert] = 'Невозможно добавить отчет по выработке' unless @production.save
     redirect_to productions_path
   end
