@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_22_073917) do
+ActiveRecord::Schema.define(version: 2022_05_22_093213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,18 @@ ActiveRecord::Schema.define(version: 2022_05_22_073917) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["model_id"], name: "index_operations_on_model_id"
+  end
+
+  create_table "personals", force: :cascade do |t|
+    t.string "user_name"
+    t.integer "report_time"
+    t.integer "timesheet_time"
+    t.integer "execution"
+    t.decimal "factor", precision: 4, scale: 2
+    t.bigint "bonus_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["bonus_id"], name: "index_personals_on_bonus_id"
   end
 
   create_table "productions", force: :cascade do |t|
@@ -132,6 +144,7 @@ ActiveRecord::Schema.define(version: 2022_05_22_073917) do
 
   add_foreign_key "executions", "works"
   add_foreign_key "operations", "models"
+  add_foreign_key "personals", "bonuses"
   add_foreign_key "visits", "timesheets"
   add_foreign_key "works", "productions"
 end
