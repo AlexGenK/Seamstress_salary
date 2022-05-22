@@ -1,0 +1,30 @@
+<h3>Премиальные коэффициенты</h3>
+<br/>
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Дата</th>
+      <th class='text-center'>Суммарное время по отчетам</th>
+      <th class='text-center'>Суммарное табельное время</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bonuses.each do |bonus| %>
+      <tr>
+        <td class='text-center'><%= bonus.date %></td>
+        <td class='text-center'><%= bonus.sum_prod %></td>
+        <td class='text-center'><%= bonus.sum_ts %></td>
+        <td>
+          <div class="btn-group">
+            <%= link_to bonus, method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить коэффициент?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

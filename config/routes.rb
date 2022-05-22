@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :bonuses
+
   resource :sreport, controller: 'sreport'
 
   resources :users
