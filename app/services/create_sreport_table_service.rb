@@ -2,9 +2,18 @@ class CreateSreportTableService
   require 'rubyXL'
   require 'rubyXL/convenience_methods'
 
-  def self.call(table_hash, models_list)
-    wb = RubyXL::Workbook.new
-    @ws = wb[0]
+  def self.call(sum_hash, time_hash, models_list)
+    @wb = RubyXL::Workbook.new
+    @ws = @wb[0]
+    @ws.sheet_name = 'ЗП'
+    create_table(sum_hash, models_list)
+    @ws = @wb.add_worksheet('Время')
+    create_table(time_hash, models_list)
+  end
+
+  private
+
+  def self.create_table(table_hash, models_list)
     create_cell_border(0, 1, 'бригада')
     create_cell_bold_border(0, 2, 'Итого:')
     x = 3
@@ -64,10 +73,8 @@ class CreateSreportTableService
       create_cell_bold(y, x, sum)
       x += 1
     end
-    wb
+    @wb
   end
-
-  private
 
   def self.create_cell_bold(y, x, content)
     @ws.add_cell(y, x, content)
