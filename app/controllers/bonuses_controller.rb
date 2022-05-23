@@ -3,7 +3,7 @@ class BonusesController < ApplicationController
 
   def index
     @bonus = Bonus.new(date: Date.today)
-    @bonuses = Bonus.order(:date)
+    @bonuses = Bonus.order(date: :desc)
   end
 
   def create
