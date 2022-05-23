@@ -2,22 +2,27 @@ class CreateSreportTableService
   require 'rubyXL'
   require 'rubyXL/convenience_methods'
 
-  def self.call(sum_hash, time_hash, models_list)
+  def self.call(sum_hash, time_hash, models_list, date)
     @wb = RubyXL::Workbook.new
     @ws = @wb[0]
     @ws.sheet_name = 'ЗП'
+    @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАРПЛАТЕ ЗА #{I18n.l(date, format: '%B %Y')}")
+    @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
     create_table(sum_hash, models_list)
     @ws = @wb.add_worksheet('Время')
+    @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАТРАЧЕНОМУ ВРЕМЕНИ ЗА #{I18n.l(date, format: '%B %Y')}")
+    @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
     create_table(time_hash, models_list)
   end
 
   private
 
   def self.create_table(table_hash, models_list)
-    create_cell_border(0, 1, 'бригада')
-    create_cell_bold_border(0, 2, 'Итого:')
+    y = 3
+    create_cell_border(y, 0, '')
+    create_cell_border(y, 1, 'бригада')
+    create_cell_bold_border(y, 2, 'Итого:')
     x = 3
-    y = 0
     models_list.each do |model|
       create_cell_border_center(y, x, model)
       x += 1
