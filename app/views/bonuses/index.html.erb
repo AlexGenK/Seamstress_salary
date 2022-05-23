@@ -24,7 +24,7 @@
   <tbody>
     <% @bonuses.each do |bonus| %>
       <tr>
-        <td class='text-center'><%= bonus.date %></td>
+        <td class='text-center'><%= link_to bonus.date, bonus_personals_path(bonus) %></td>
         <td class='text-center'><%= bonus.sum_prod %></td>
         <td class='text-center'><%= bonus.sum_ts %></td>
         <td>

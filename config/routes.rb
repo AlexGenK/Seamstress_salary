@@ -22,7 +22,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bonuses
+  resources :bonuses do
+    resources :personals
+  end
 
   resource :sreport, controller: 'sreport'
 
