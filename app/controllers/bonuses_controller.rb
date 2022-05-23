@@ -8,7 +8,25 @@ class BonusesController < ApplicationController
 
   def create
     @bonus = Bonus.new(bonus_params)
-    flash[:alert] = 'Невозможно добавить расчет премиальных коэффициентов' unless @bonus.save
+    if @bonus.save
+      current_productions = GetProductionsQuery.call(@bonus.date, 'Все')
+      workers_list = GetProductionsListsQuery.workers(current_productions)
+      timesheet = Timesheet.where('extract (year from date) = ? AND extract (month from date) = ?', @bonus.date.year, @bonus.date.month)[0]
+      workers_list.each do |worker|
+        report_time = current_productions.find_by(user_name: worker).time.round
+        timesheet_time = timesheet.visits.find_by(user_name: worker).time
+        execution = (100*report_time/timesheet_time).round
+        factor = Factor.get_by_percent(execution)
+        @personal = @bonus.personals.new(user_name: worker,
+                                        report_time: report_time, 
+                                        timesheet_time: timesheet_time,
+                                        execution: execution,
+                                        factor: factor)
+        @personal.save
+      end
+    else
+      flash[:alert] = 'Невозможно добавить расчет премиальных коэффициентов'
+    end
     redirect_to bonuses_path
   end
 

@@ -1,1 +1,38 @@
 <h4>Коэффициенты для премии на <%= l(@bonus.date, format: '%B %Y') %></h4>
+
+<table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th class='text-center'>Имя</th>
+      <th class='text-center'>Время по отчету</th>
+      <th class='text-center'>Табельное время</th>
+      <th class='text-center'>План %</th>
+      <th class='text-center'>Коэффициент</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @personals.each do |personal| %>
+      <tr>
+        <td class='text-center'><%= personal.user_name %></td>
+        <td class='text-center'><%= personal.report_time %></td>
+        <td class='text-center'><%= personal.timesheet_time %></td>
+        <td class='text-center'><%= personal.execution %></td>
+        <td class='text-center'><%= personal.factor %></td>
+        <td>
+          <div class="btn-group">
+          	<%= link_to edit_bonus_personal_path(@bonus, personal), 
+              class: "btn btn-outline-dark btn-sm" do %>
+              <i class="fas fa-edit"></i>
+            <% end %>
+            <%= link_to bonus_personal_path(@bonus, personal), method: :delete, 
+              class: "btn btn-outline-danger btn-sm",
+              data: {confirm: "Вы уверенны, что хотите удалить данные?"} do %>
+              <i class="fas fa-times">&nbsp;</i>
+            <% end %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
