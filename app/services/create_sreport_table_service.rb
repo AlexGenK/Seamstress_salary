@@ -3,21 +3,22 @@ class CreateSreportTableService
   require 'rubyXL/convenience_methods'
 
   def self.call(sum_hash, time_hash, models_list, date)
+    bonus = Bonus.get_by_my(date)
     @wb = RubyXL::Workbook.new
     @ws = @wb[0]
     @ws.sheet_name = 'ЗП'
     @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАРПЛАТЕ ЗА #{I18n.l(date, format: '%B %Y')}")
     @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
-    create_table(sum_hash, models_list)
+    create_table(sum_hash, models_list, bonus, 'salary')
     @ws = @wb.add_worksheet('Время')
     @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАТРАЧЕНОМУ ВРЕМЕНИ ЗА #{I18n.l(date, format: '%B %Y')}")
     @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
-    create_table(time_hash, models_list)
+    create_table(time_hash, models_list, bonus, 'time')
   end
 
   private
 
-  def self.create_table(table_hash, models_list)
+  def self.create_table(table_hash, models_list, bonus, style)
     y = 3
     create_cell_border(y, 0, '')
     create_cell_border(y, 1, 'бригада')
@@ -26,6 +27,15 @@ class CreateSreportTableService
     models_list.each do |model|
       create_cell_border_center(y, x, model)
       x += 1
+    end
+    if style == 'time'
+      create_cell_bold_border(y, x, 'Итого:')
+      x += 1
+      create_cell_border(y, x, 'Табель')
+      x += 1
+      create_cell_border(y, x, 'План %')
+      x += 1
+      create_cell_border(y, x, 'Премия %')
     end
     
     col_sum = {}
@@ -44,7 +54,6 @@ class CreateSreportTableService
             create_cell_border(y, x, sum == 0 ? '' : sum)
             x +=1
             row_sum += sum
-            total_team_sum += sum
             if team_col_sum[name] == nil
               team_col_sum[name] = sum
             else 
@@ -56,7 +65,38 @@ class CreateSreportTableService
               col_sum[name] += sum
             end
           end
+          row_sum = row_sum&.round
+          total_team_sum += row_sum
           create_cell_bold_border(y, 2, row_sum)
+          if style == 'time'
+            create_cell_bold_border(y, x, row_sum)
+            x += 1
+            if bonus != nil
+              personal = bonus.personals.find_by(user_name: name)
+              if personal !=nil
+                create_cell_border(y, x, personal.timesheet_time)
+                x += 1
+                create_cell_border(y, x, personal.execution)
+                x += 1
+                create_cell_border(y, x, personal.factor)
+                x += 1
+              else
+                create_cell_border(y, x, '')
+                x += 1
+                create_cell_border(y, x, '')
+                x += 1
+                create_cell_border(y, x, '')
+                x += 1
+              end
+            else
+              create_cell_border(y, x, '')
+              x += 1
+              create_cell_border(y, x, '')
+              x += 1
+              create_cell_border(y, x, '')
+              x += 1
+            end 
+          end
         end
       end
       total_sum += total_team_sum
@@ -67,6 +107,16 @@ class CreateSreportTableService
       create_cell_bold_border(y, 2, total_team_sum)
       team_col_sum.each do |name, sum|
         create_cell_bold_border(y, x, sum)
+        x += 1
+      end
+      if style == 'time'
+        create_cell_border(y, x, '')
+        x += 1
+        create_cell_border(y, x, '')
+        x += 1
+        create_cell_border(y, x, '')
+        x += 1
+        create_cell_border(y, x, '')
         x += 1
       end   
     end
