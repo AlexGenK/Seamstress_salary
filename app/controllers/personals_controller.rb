@@ -1,6 +1,7 @@
 class PersonalsController < ApplicationController
   before_action :set_bonus
   before_action :set_personal, only: [:destroy, :edit, :update]
+  after_action :recalculate_bonus_sum, only: [:destroy, :update]
 
   def index
     @personals = @bonus.personals.order(:user_name)
@@ -35,5 +36,9 @@ class PersonalsController < ApplicationController
 
   def personal_params
     params.require(:personal).permit(:user_name, :report_time, :timesheet_time, :execution, :factor)
+  end
+
+  def recalculate_bonus_sum
+    @bonus.calculate_sum
   end
 end

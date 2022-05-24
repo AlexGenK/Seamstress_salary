@@ -24,6 +24,7 @@ class BonusesController < ApplicationController
                                         factor: factor)
         @personal.save
       end
+      @bonus.calculate_sum
     else
       flash[:alert] = 'Невозможно добавить расчет премиальных коэффициентов'
     end
