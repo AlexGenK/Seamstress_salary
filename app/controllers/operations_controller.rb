@@ -2,6 +2,7 @@ class OperationsController < ApplicationController
   before_action :set_model
   before_action :set_operation, only: [:edit, :update, :destroy]
   after_action :recalculate_model_cost, only: [:create, :update, :destroy, :filling]
+  load_and_authorize_resource
 
   def index
     @operations = @model.operations.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')"))

@@ -1,5 +1,6 @@
 class ProductionsController < ApplicationController
   before_action :set_production, only: [:destroy, :show]
+  load_and_authorize_resource
 
   def index
     @production = Production.new(date: Date.today)

@@ -3,6 +3,7 @@ class WorksController < ApplicationController
   before_action :set_work, only: [:destroy]
   after_action :recalculate_production_sum, only: [:create, :destroy]
   after_action :recalculate_production_time, only: [:create, :destroy]
+  load_and_authorize_resource
 
   def index
     @work = @production.works.new

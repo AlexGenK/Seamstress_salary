@@ -1,4 +1,6 @@
 class SreportController < ApplicationController
+  authorize_resource :class => false
+  
   def edit
   end
 

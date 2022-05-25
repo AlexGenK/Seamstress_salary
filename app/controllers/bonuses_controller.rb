@@ -1,5 +1,6 @@
 class BonusesController < ApplicationController
   before_action :set_bonus, only: [:destroy]
+  load_and_authorize_resource
 
   def index
     @bonus = Bonus.new(date: Date.today)

@@ -1,5 +1,6 @@
 class ModelsController < ApplicationController
   before_action :set_model, only: [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
     flash[:alert] = nil

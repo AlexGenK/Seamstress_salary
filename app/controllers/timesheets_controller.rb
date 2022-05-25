@@ -1,5 +1,6 @@
 class TimesheetsController < ApplicationController
   before_action :set_timesheet, only: [:destroy]
+  load_and_authorize_resource
 
   def index
     @timesheets = Timesheet.order(date: :desc)

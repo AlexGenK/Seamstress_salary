@@ -1,5 +1,6 @@
 class RanksController < ApplicationController
   before_action :set_rank, only: [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
     @ranks=Rank.order(:sewing, :category)

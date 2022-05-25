@@ -2,6 +2,7 @@ class PersonalsController < ApplicationController
   before_action :set_bonus
   before_action :set_personal, only: [:destroy, :edit, :update]
   after_action :recalculate_bonus_sum, only: [:destroy, :update]
+  load_and_authorize_resource
 
   def index
     @personals = @bonus.personals.order(:user_name)

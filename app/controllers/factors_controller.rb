@@ -1,5 +1,6 @@
 class FactorsController < ApplicationController
   before_action :set_factor, only: [:edit, :update, :destroy]
+  load_and_authorize_resource
 
   def index
     @factors = Factor.order(:min)

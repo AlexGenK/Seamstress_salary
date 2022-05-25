@@ -2,6 +2,7 @@ class VisitsController < ApplicationController
   before_action :set_timesheet
   before_action :set_visit, only: [:destroy, :edit, :update]
   after_action :recalculate_timesheet_sum, only: [:create, :mass_create, :destroy, :update]
+  load_and_authorize_resource
 
   def index
     @visits = @timesheet.visits.order(:user_name)

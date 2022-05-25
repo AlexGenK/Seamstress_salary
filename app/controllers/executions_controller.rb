@@ -4,6 +4,7 @@ class ExecutionsController < ApplicationController
   before_action :set_execution, only: [:destroy]
   after_action :recalculate_work_sum, only: [:create, :destroy]
   after_action :recalculate_work_time, only: [:create, :destroy]
+  load_and_authorize_resource
 
   def index
     @executions = @work.executions.order(Arel.sql("(substring(operation_number, '^[0-9]+'))::int, substring(concat(operation_number, '!'), '[^0-9_].*$')"))
