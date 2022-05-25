@@ -33,54 +33,56 @@
             <li class="nav-item">
               <%= link_to "Выработка", productions_path, class: "nav-link #{controller_name == 'productions' ? 'active' : ''}" %>
             </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle <%= (controller_name == 'timesheets') ||
-                                                     (controller_name == 'visits') ||
-                                                     (controller_name == 'bonuses')? 'active' : '' %>" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Время
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                <li>
-                  <%= link_to "Табель", timesheets_path, class: "dropdown-item #{(controller_name == 'timesheets') || 
-                                                                                 (controller_name == 'visits') ? 'active' : ''}" %>
-                </li>
-                <li>
-                  <%= link_to "Премия", bonuses_path, class: "dropdown-item #{(controller_name == 'bonuses')  ? 'active' : ''}" %>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle <%= (controller_name == 'factors') ||
-                                                     (controller_name == 'ranks') ||
-                                                     (controller_name == 'operations') ||
-                                                     (controller_name == 'models') ? 'active' : '' %>" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Справочники
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                <li>
-                  <%= link_to "Разряды", ranks_path, class: "dropdown-item #{controller_name == 'ranks' ? 'active' : ''}" %>
-                </li>
-                <li>
-                  <%= link_to "Модели", models_path, class: "dropdown-item #{controller_name == 'models' ||
-                                                                             controller_name == 'operations' ? 'active' : ''}" %>
-                </li>
-                <li>
-                  <%= link_to "Коэффициенты премии", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Отчеты
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                <li><%= link_to "ЗП и время", edit_sreport_path, class: "dropdown-item #{controller_name == 'sreport' ? 'active' : ''}" %></li>
-                <li><a class="dropdown-item" href="#">Операции</a></li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Пользователи", users_path, class: "nav-link #{controller_name == 'users' ? 'active' : ''}" %>
-            </li>
+              <% if user_signed_in? && current_user.admin_role? %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle <%= (controller_name == 'timesheets') ||
+                                                       (controller_name == 'visits') ||
+                                                       (controller_name == 'bonuses')? 'active' : '' %>" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Время
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                  <li>
+                    <%= link_to "Табель", timesheets_path, class: "dropdown-item #{(controller_name == 'timesheets') || 
+                                                                                   (controller_name == 'visits') ? 'active' : ''}" %>
+                  </li>
+                  <li>
+                    <%= link_to "Премия", bonuses_path, class: "dropdown-item #{(controller_name == 'bonuses')  ? 'active' : ''}" %>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle <%= (controller_name == 'factors') ||
+                                                       (controller_name == 'ranks') ||
+                                                       (controller_name == 'operations') ||
+                                                       (controller_name == 'models') ? 'active' : '' %>" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Справочники
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                  <li>
+                    <%= link_to "Разряды", ranks_path, class: "dropdown-item #{controller_name == 'ranks' ? 'active' : ''}" %>
+                  </li>
+                  <li>
+                    <%= link_to "Модели", models_path, class: "dropdown-item #{controller_name == 'models' ||
+                                                                               controller_name == 'operations' ? 'active' : ''}" %>
+                  </li>
+                  <li>
+                    <%= link_to "Коэффициенты премии", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Отчеты
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                  <li><%= link_to "ЗП и время", edit_sreport_path, class: "dropdown-item #{controller_name == 'sreport' ? 'active' : ''}" %></li>
+                  <li><a class="dropdown-item" href="#">Операции</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <%= link_to "Пользователи", users_path, class: "nav-link #{controller_name == 'users' ? 'active' : ''}" %>
+              </li>
+            <% end %>
           </ul>
           <ul class="navbar-nav ml-auto">
             <% if user_signed_in? %>
