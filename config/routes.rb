@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   end
 
   resource :sreport, controller: 'sreport'
+  resource :oreport, controller: 'oreport'
 
   resources :users
 

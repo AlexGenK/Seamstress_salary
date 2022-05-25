@@ -1,0 +1,2 @@
+module OreportHelper
+end

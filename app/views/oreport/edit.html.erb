@@ -1,0 +1,21 @@
+<h4>Создать отчет по выполненным операциям</h4>
+<br/>
+<%= form_tag new_oreport_path, method: :get, class: "row" do %>
+  <div class='col-auto mb-2'>
+    <%= label_tag :date, "отчет за", class: "col-form-label" %>
+  </div>
+  <div class='col-auto mb-2'>
+    <%= month_field_tag :date, Date.today.strftime('%Y-%m'), class: "form-control" %>
+  </div>
+  <div class='col-auto mb-2'>
+    <%= label_tag :team, "для модели", class: "col-form-label" %>
+  </div>
+  <div class='col-auto mb-2'>
+    <%= select_tag :team, options_for_select(Model.order(:number).pluck(:number).unshift('Все')), class: "form-select" %>
+  </div>
+  <div class='col-auto mb-2'>
+    <%= button_tag type: 'submit', class: "btn btn-primary" do %>
+      <i class="fa-solid fa-download"></i> Получить отчет
+    <% end %>
+  </div>
+<% end %>
