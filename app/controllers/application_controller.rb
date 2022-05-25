@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:alert] = 'У вас нет доступа к этой странице'
-    redirect_to root_path
+    redirect_to root_path, alert: "У вас нет доступа к этой странице"
   end
 
   def configure_permitted_parameters

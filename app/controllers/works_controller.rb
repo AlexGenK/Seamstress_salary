@@ -1,6 +1,10 @@
 class WorksController < ApplicationController
+  include Verifiable
+
   before_action :set_production
   before_action :set_work, only: [:destroy]
+  before_action :detect_invalid_user
+  
   after_action :recalculate_production_sum, only: [:create, :destroy]
   after_action :recalculate_production_time, only: [:create, :destroy]
   load_and_authorize_resource

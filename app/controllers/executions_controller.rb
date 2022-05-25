@@ -1,9 +1,14 @@
 class ExecutionsController < ApplicationController
+  include Verifiable
+
   before_action :set_production
   before_action :set_work
   before_action :set_execution, only: [:destroy]
+  before_action :detect_invalid_user
+
   after_action :recalculate_work_sum, only: [:create, :destroy]
   after_action :recalculate_work_time, only: [:create, :destroy]
+  
   load_and_authorize_resource
 
   def index

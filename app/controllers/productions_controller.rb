@@ -1,11 +1,20 @@
 class ProductionsController < ApplicationController
+  include Verifiable
+
   before_action :set_production, only: [:destroy, :show]
+  before_action :detect_invalid_user, only: [:destroy, :show]
+
   load_and_authorize_resource
 
   def index
     @production = Production.new(date: Date.today)
-    @productions = Production.order(date: :desc, user_name: :asc)
-    @user_names = User.get_worker_names
+    if current_user.admin_role?
+      @productions = Production.order(date: :desc, user_name: :asc)
+      @user_names = User.get_worker_names
+    else
+      @productions = Production.where(user_name: current_user.name).order(date: :desc, user_name: :asc)
+      @user_names = [current_user.name]
+    end
   end
 
   def create
