@@ -10,4 +10,8 @@ class Production < ApplicationRecord
   def calculate_time
     self.update(time: self.works.sum(:time))
   end
+
+  def self.get_by_my(date, username)
+    self.where('extract (year from date) = ? AND extract (month from date) = ? AND user_name = ?', date.year, date.month, username).first
+  end
 end
