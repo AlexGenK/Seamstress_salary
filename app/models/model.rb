@@ -1,5 +1,6 @@
 class Model < ApplicationRecord
   validates :sewing, :name, :number, presence: true
+  validates :number, :name, uniqueness: true
 
   has_many :operations, dependent: :destroy
 
