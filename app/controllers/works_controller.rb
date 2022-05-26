@@ -19,6 +19,11 @@ class WorksController < ApplicationController
     @model = Model.find(work_params[:model_id])
     @work.model_nname = @model.name
     @work.model_number = @model.number
+    if @production.works.find_by(model_nname: @work.model_nname) != nil
+      @work.destroy
+      redirect_to production_works_path(@production), alert: 'Невозможно добавить уже имеющуюся модель!'
+      return
+    end
     flash[:alert] = 'Невозможно добавить модель' unless @work.save
     redirect_to production_works_path(@production)
   end
