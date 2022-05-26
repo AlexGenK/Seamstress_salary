@@ -30,4 +30,6 @@
   </table>
   <br/>
 <% end %>
-<h5><%= "Всего #{@production.sum} тенге,  #{@production.time} часов."%></h5>
+<h5><%= "Всего: #{@production.sum} тенге,  #{@production.time} часов."%></h5>
+<h5><%= "Премия за выполнение плана: #{@bf_sum}" %></h5>
+<h5><%= "Итого: #{@all_sum} тенге" %></h5>

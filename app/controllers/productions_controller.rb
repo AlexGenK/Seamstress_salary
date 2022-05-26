@@ -34,6 +34,15 @@ class ProductionsController < ApplicationController
   end
 
   def show
+    @all_sum = @production.sum
+    @bf = GetBonusFactorQuery.call(@production.date, @production.user_name)
+    if @bf == nil
+      @bf_sum = 'не расчитано'
+    else
+      @bf_sum = "#{@production.sum * @bf} тенге"
+      @all_sum += @production.sum * @bf
+    end
+     
   end
 
   private
