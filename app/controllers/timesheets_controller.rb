@@ -9,6 +9,10 @@ class TimesheetsController < ApplicationController
 
   def create
     @timesheet = Timesheet.new(timesheet_params)
+    if Timesheet.get_by_my(@timesheet.date) != nil
+      redirect_to timesheets_path, alert: 'Табель за этот месяц уже существует!'
+      return
+    end
     flash[:alert] = 'Невозможно добавить табель' unless @timesheet.save
     redirect_to mass_new_timesheet_visits_path(@timesheet)
   end
