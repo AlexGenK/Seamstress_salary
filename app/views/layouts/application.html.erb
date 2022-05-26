@@ -38,7 +38,7 @@
                 <a class="nav-link dropdown-toggle <%= (controller_name == 'timesheets') ||
                                                        (controller_name == 'visits') ||
                                                        (controller_name == 'bonuses')? 'active' : '' %>" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Время
+                  Время и премии
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
                   <li>
@@ -46,7 +46,7 @@
                                                                                    (controller_name == 'visits') ? 'active' : ''}" %>
                   </li>
                   <li>
-                    <%= link_to "Премия", bonuses_path, class: "dropdown-item #{(controller_name == 'bonuses')  ? 'active' : ''}" %>
+                    <%= link_to "Премия за выработку", bonuses_path, class: "dropdown-item #{(controller_name == 'bonuses')  ? 'active' : ''}" %>
                   </li>
                 </ul>
               </li>
@@ -66,7 +66,7 @@
                                                                                controller_name == 'operations' ? 'active' : ''}" %>
                   </li>
                   <li>
-                    <%= link_to "Коэффициенты премии", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
+                    <%= link_to "Коэффициенты премии за выработку", factors_path, class: "dropdown-item #{controller_name == 'factors' ? 'active' : ''}" %>
                   </li>
                 </ul>
               </li>
