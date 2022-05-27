@@ -3,11 +3,11 @@ class ExecutionsController < ApplicationController
 
   before_action :set_production
   before_action :set_work
-  before_action :set_execution, only: [:destroy]
+  before_action :set_execution, only: [:destroy, :edit, :update]
   before_action :detect_invalid_user
 
-  after_action :recalculate_work_sum, only: [:create, :destroy]
-  after_action :recalculate_work_time, only: [:create, :destroy]
+  after_action :recalculate_work_sum, only: [:create, :destroy, :update]
+  after_action :recalculate_work_time, only: [:create, :destroy, :update]
   
   load_and_authorize_resource
 
@@ -37,6 +37,22 @@ class ExecutionsController < ApplicationController
   def destroy
     flash[:alert] = 'Невозможно удалить выполнение' unless @execution.destroy
     redirect_to production_work_executions_path(@production, @work)
+  end
+
+  def edit
+    @oper_list = Model.find(@work.model_id).operations.all.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')")).collect {|o| ["#{o.number} - #{o.name.truncate(50)}", o.id]}
+  end
+
+  def update
+    if @execution.update(execution_params)
+      @execution.sum = @execution.operation_cost * @execution.quantity
+      @execution.time = @execution.operation_time * @execution.quantity
+      @execution.save
+      redirect_to production_work_executions_path(@production, @work)
+    else
+      flash[:alert] = 'Невозможно отредактировать операцию'
+      render :edit
+    end
   end
 
   private

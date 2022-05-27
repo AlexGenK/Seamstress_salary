@@ -1,0 +1,4 @@
+<h4>Отчет по выработке <b><%= @production.user_name %></b> за <b><%= @production.date.strftime('%d.%m.%Y') %></b></h4>
+<h5>Модель <b><%= "#{@work.model_number} #{@work.model_nname}" %></b></h5>
+<h6>Отредактировать операцию:</h6>
+<%= render 'form', production: @production, work: @work, execution: @execution, style: :edit %>
