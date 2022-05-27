@@ -17,6 +17,7 @@ class CreateSreportTableService < ExcelOperation
   private
 
   def self.create_table(table_hash, models_list, bonus, style)
+    # ФОРМИРУЕМ ШАПКУ ТАБЛИЦЫ
     y = 3
     create_cell_border(y, 0, '')
     create_cell_border(y, 1, 'бригада')
@@ -34,6 +35,17 @@ class CreateSreportTableService < ExcelOperation
       create_cell_border(y, x, 'План %')
       x += 1
       create_cell_border(y, x, 'Премия %')
+    else
+      create_cell_bold_border(y, x, 'Итого:')
+      x += 1
+      create_cell_bold_border(y, x, '% за план')
+      x += 1
+      create_cell_bold_border(y, x, 'Премия за план')
+    end
+
+    # УСТАНАВЛИВАЕМ ШИРИНУ СТОЛБЦОВ
+    (0..x).each do |i|
+      @ws.change_column_width(i, 10)
     end
     
     col_sum = {}
@@ -63,11 +75,16 @@ class CreateSreportTableService < ExcelOperation
               col_sum[name] += sum
             end
           end
+
+          # РАСЧЕТ СУММАРНЫХ КОЛОНОК СЛЕВА И СПРАВА          
           row_sum = row_sum&.round
           total_team_sum += row_sum
           create_cell_bold_border(y, 2, row_sum)
+          create_cell_bold_border(y, x, row_sum)
+
+          # РАСЧЕТ ПРАВЫХ СУММАРНЫХ КОЛОНОК С БОНУСАМИ
+          # для таблицы времени
           if style == 'time'
-            create_cell_bold_border(y, x, row_sum)
             x += 1
             if bonus != nil
               personal = bonus.personals.find_by(user_name: name)
@@ -93,8 +110,28 @@ class CreateSreportTableService < ExcelOperation
               x += 1
               create_cell_border(y, x, '')
               x += 1
-            end 
+            end
+          # для таблицы зарплаты
+          else 
+            x += 1
+            if bonus != nil
+              personal = bonus.personals.find_by(user_name: name)
+              if personal !=nil
+                create_cell_border(y, x, personal.factor)
+                x += 1
+                create_cell_border(y, x, (personal.factor * row_sum).round)
+              else
+                create_cell_border(y, x, '')
+                x += 1
+                create_cell_border(y, x, '')
+              end
+            else
+              create_cell_border(y, x, '')
+              x += 1
+              create_cell_border(y, x, '')
+            end
           end
+
         end
       end
       total_sum += total_team_sum
