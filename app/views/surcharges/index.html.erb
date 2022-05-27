@@ -1,5 +1,7 @@
 <h2>Начисления</h2>
-<br/>
+<%= link_to new_surcharge_path, class: "btn btn-primary" do %>
+  <i class="fas fa-plus"></i> Добавить начисление
+<% end %>
 <table class="table table-striped table-sm">
   <thead>
     <tr>
@@ -25,7 +27,7 @@
             <% end %>
             <%= link_to surcharge, method: :delete, 
               class: "btn btn-outline-danger btn-sm",
-              data: {confirm: "Вы уверенны, что хотите удалить табель?"} do %>
+              data: {confirm: "Вы уверенны, что хотите удалить начисление?"} do %>
               <i class="fas fa-times">&nbsp;</i>
             <% end %>
           </div>

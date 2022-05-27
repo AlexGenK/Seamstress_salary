@@ -1,0 +1,33 @@
+<%= form_for surcharge do |f| %>
+  <div class='row py-2'>
+    <div class='col'>
+      <%= f.label :user_name, "сотрудник", class: "col-form-label" %>
+      <%= f.select :user_name, @user_names, {}, {class: 'form-select'} %>
+    </div>
+    <div class='col'>
+      <%= f.label :date, "дата", class: "col-form-label" %>
+      <%= f.date_field :date, class: 'form-control' %>
+    </div>
+    <div class='col'>
+      <%= f.label :sum, "сумма", class: "col-form-label" %>
+      <%= f.number_field :sum, step: '1', class: 'form-control' %>
+    </div>
+    <div class='col'>
+      <%= f.label :comment, "комментарий", class: "col-form-label" %>
+      <%= f.text_field :comment, class: 'form-control' %>
+    </div>
+  </div>
+  <div class='row py-2'>
+    <div class='col-auto mb-2'>
+      <%= f.button type: 'submit', class: "btn btn-primary" do %>
+        <i class="fas fa-save"></i> Сохранить
+      <% end %>
+    </div>
+    <div class='col-auto mb-2'>
+      <%= link_to surcharges_path, class: "btn btn-secondary" do %>
+        <i class="fas fa-undo-alt"></i> Вернуться
+      <% end %>
+    </div>
+    </div>
+  </div>
+<% end %>
