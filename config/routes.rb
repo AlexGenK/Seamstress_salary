@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
   resources :factors
   resources :ranks
+  resources :surcharges
 
   resources :timesheets do
     resources :visits do
