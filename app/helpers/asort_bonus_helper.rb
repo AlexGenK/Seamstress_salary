@@ -1,0 +1,2 @@
+module AsortBonusHelper
+end

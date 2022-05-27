@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :personals
   end
 
+  resource :asort_bonus, controller: 'asort_bonus'
   resource :sreport, controller: 'sreport'
   resource :oreport, controller: 'oreport'
 
