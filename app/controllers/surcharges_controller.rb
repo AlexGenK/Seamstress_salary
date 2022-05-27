@@ -1,4 +1,6 @@
 class SurchargesController < ApplicationController
+  before_action :set_surcharge, only: [:edit, :update, :destroy]
+
   def index
     @surcharges = Surcharge.all.order(:date, :user_name)
   end
@@ -18,9 +20,18 @@ class SurchargesController < ApplicationController
     end
   end
 
+  def destroy
+    flash[:alert] = 'Невозможно удалить начисление' unless @surcharge.destroy
+    redirect_to surcharges_path
+  end
+
   private
 
   def surcharge_params
     params.require(:surcharge).permit(:user_name, :date, :sum, :comment)
   end
+
+  def set_surcharge
+    @surcharge = Surcharge.find(params[:id])
+  end  
 end
