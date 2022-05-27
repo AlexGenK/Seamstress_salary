@@ -2,7 +2,7 @@ class SurchargesController < ApplicationController
   before_action :set_surcharge, only: [:edit, :update, :destroy]
 
   def index
-    @surcharges = Surcharge.all.order(:date, :user_name)
+    @surcharges = Surcharge.all.order('date DESC, user_name')
   end
 
   def new
@@ -17,6 +17,19 @@ class SurchargesController < ApplicationController
     else
       flash[:alert] = 'Невозможно добавить начисление'
       render :new
+    end
+  end
+
+  def edit
+    @user_names = User.get_worker_names
+  end
+
+  def update
+    if @surcharge.update(surcharge_params)
+      redirect_to surcharges_path
+    else
+      flash[:alert] = 'Невозможно отредактировать начисление'
+      render :edit
     end
   end
 

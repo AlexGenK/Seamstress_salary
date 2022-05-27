@@ -36,6 +36,7 @@ class RanksController < ApplicationController
       render :edit
     end
   end
+  
   private
 
   def rank_params
