@@ -4,7 +4,7 @@ class Production < ApplicationRecord
   has_many :works, dependent: :destroy
 
   def calculate_sum
-    self.update(sum: self.works.sum(:sum))
+    self.update(sum: self.works.sum(:sum).round)
   end
 
   def calculate_time

@@ -35,6 +35,11 @@ class ExcelOperation
     @ws.sheet_data[y][x].change_font_bold(:true)
   end
 
+  def self.create_cell_bold_border_wrap(y, x, content)
+    create_cell_bold_border(y, x, content)
+    @ws[y][x].change_text_wrap(true)
+  end
+
   def self.create_cell_bold_border_right(y, x, content)
     create_cell_bold_border(y, x, content)
     @ws.sheet_data[y][x].change_horizontal_alignment('right')

@@ -38,14 +38,18 @@ class CreateSreportTableService < ExcelOperation
     else
       create_cell_bold_border(y, x, 'Итого:')
       x += 1
-      create_cell_bold_border(y, x, '% за план')
+      create_cell_bold_border_wrap(y, x, '% за план')
       x += 1
-      create_cell_bold_border(y, x, 'Премия за план')
+      create_cell_bold_border_wrap(y, x, 'Премия за план')
+      x += 1
+      create_cell_bold_border_wrap(y, x, '% за асортимент')
+      x += 1
+      create_cell_bold_border_wrap(y, x, 'Премия за асортимент')  
     end
 
     # УСТАНАВЛИВАЕМ ШИРИНУ СТОЛБЦОВ
     (0..x).each do |i|
-      @ws.change_column_width(i, 10)
+      @ws.change_column_width(i, 12)
     end
     
     col_sum = {}
@@ -112,14 +116,15 @@ class CreateSreportTableService < ExcelOperation
               x += 1
             end
           # для таблицы зарплаты
-          else 
+          else
+            # бонусы за выполнение плана
             x += 1
             if bonus != nil
               personal = bonus.personals.find_by(user_name: name)
               if personal !=nil
                 create_cell_border(y, x, personal.factor)
                 x += 1
-                create_cell_border(y, x, (personal.factor * row_sum).round)
+                create_cell_bold_border(y, x, (personal.factor * row_sum).round)
               else
                 create_cell_border(y, x, '')
                 x += 1
@@ -130,8 +135,13 @@ class CreateSreportTableService < ExcelOperation
               x += 1
               create_cell_border(y, x, '')
             end
+            # бонусы за асортимент
+            factor_oper = (works.count{|key,value| value > 0}) * AsortBonus.first.factor
+            x += 1
+            create_cell_border(y, x, factor_oper)
+            x += 1
+            create_cell_bold_border(y, x, (factor_oper * row_sum).round)
           end
-
         end
       end
       total_sum += total_team_sum
