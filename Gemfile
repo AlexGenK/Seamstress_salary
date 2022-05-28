@@ -32,6 +32,7 @@ gem 'devise'
 gem 'cancancan'
 gem 'rubyXL'
 gem 'rails-i18n', '~> 6.0'
+gem 'pagy'
 gem 'net-smtp' # to send email
 gem 'net-imap' # for rspec
 gem 'net-pop'  # for rspec

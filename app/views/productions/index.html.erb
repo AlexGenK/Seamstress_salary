@@ -18,7 +18,7 @@
     <%= f.date_field :date, class: 'form-control' %>
   </div>
 <% end %>
-<br>
+<%== pagy_bootstrap_nav(@pagy) %>
 <table class="table table-striped table-sm">
   <thead>
     <tr>
@@ -55,3 +55,4 @@
     <% end %>
   </tbody>
 </table>
+<%== pagy_bootstrap_nav(@pagy) %>
