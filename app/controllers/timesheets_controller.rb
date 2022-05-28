@@ -3,14 +3,15 @@ class TimesheetsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @timesheets = Timesheet.order(date: :desc)
+    @pagy, @timesheets = pagy(Timesheet.order(date: :desc))
     @timesheet = Timesheet.new(date: Date.today)
+    session[:page] = @pagy.page
   end
 
   def create
     @timesheet = Timesheet.new(timesheet_params)
     if Timesheet.get_by_my(@timesheet.date) != nil
-      redirect_to timesheets_path, alert: 'Табель за этот месяц уже существует!'
+      redirect_to timesheets_path(page: session[:page]), alert: 'Табель за этот месяц уже существует!'
       return
     end
     flash[:alert] = 'Невозможно добавить табель' unless @timesheet.save
@@ -19,7 +20,7 @@ class TimesheetsController < ApplicationController
 
   def destroy
     flash[:alert] = 'Невозможно удалить табель' unless @timesheet.destroy
-    redirect_to timesheets_path
+    redirect_to timesheets_path(page: session[:page])
   end
 
   private

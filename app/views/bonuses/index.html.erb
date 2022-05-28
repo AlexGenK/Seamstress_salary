@@ -1,5 +1,5 @@
 <h3>Премиальные коэффициенты</h3>
-<%= form_for @bonus, html: {class: "row"} do |f| %>
+<%= form_for @bonus, html: {class: "row mb-2"} do |f| %>
   <div class='col-auto'>
     <%= f.button type: 'submit', class: "btn btn-primary" do %>
       <i class="fas fa-plus"></i> Рассчитать премиальные коэффициенты
@@ -12,6 +12,7 @@
     <%= f.date_field :date, class: 'form-control' %>
   </div>
 <% end %>
+<%== pagy_bootstrap_nav(@pagy) %>
 <table class="table table-striped table-sm">
   <thead>
     <tr>
@@ -40,3 +41,4 @@
     <% end %>
   </tbody>
 </table>
+<%== pagy_bootstrap_nav(@pagy) %>

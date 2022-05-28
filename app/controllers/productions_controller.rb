@@ -15,22 +15,23 @@ class ProductionsController < ApplicationController
       @pagy, @productions = pagy(Production.where(user_name: current_user.name).order(date: :desc, user_name: :asc))
       @user_names = [current_user.name]
     end
+    session[:page] = @pagy.page
   end
 
   def create
     @production = Production.new(production_params)
     if Production.get_by_my(@production.date, @production.user_name) != nil
-      redirect_to productions_path, alert: "Отчет пользователя #{@production.user_name} за этот месяц уже существует!"
+      redirect_to productions_path(page: session[:page]), alert: "Отчет пользователя #{@production.user_name} за этот месяц уже существует!"
       return
     end
     @production.team = User.find_by(name: @production.user_name).team
     flash[:alert] = 'Невозможно добавить отчет по выработке' unless @production.save
-    redirect_to productions_path
+    redirect_to productions_path(page: session[:page])
   end
 
   def destroy
     flash[:alert] = 'Невозможно удалить отчет по выработке' unless @production.destroy
-    redirect_to productions_path
+    redirect_to productions_path(page: session[:page])
   end
 
   def show

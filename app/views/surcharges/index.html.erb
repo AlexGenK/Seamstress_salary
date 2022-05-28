@@ -1,7 +1,8 @@
 <h2>Начисления</h2>
-<%= link_to new_surcharge_path, class: "btn btn-primary" do %>
+<%= link_to new_surcharge_path, class: "btn btn-primary mb-2" do %>
   <i class="fas fa-plus"></i> Добавить начисление
 <% end %>
+<%== pagy_bootstrap_nav(@pagy) %>
 <table class="table table-striped table-sm">
   <thead>
     <tr>
@@ -36,3 +37,4 @@
     <% end %>
   </tbody>
 </table>
+<%== pagy_bootstrap_nav(@pagy) %>

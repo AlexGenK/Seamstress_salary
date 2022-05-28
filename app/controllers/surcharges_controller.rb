@@ -2,7 +2,8 @@ class SurchargesController < ApplicationController
   before_action :set_surcharge, only: [:edit, :update, :destroy]
 
   def index
-    @surcharges = Surcharge.all.order('date DESC, user_name')
+    @pagy, @surcharges = pagy(Surcharge.all.order('date DESC, user_name'))
+    session[:page] = @pagy.page
   end
 
   def new
@@ -13,7 +14,7 @@ class SurchargesController < ApplicationController
   def create
     @surcharge = Surcharge.new(surcharge_params)
     if @surcharge.save
-      redirect_to surcharges_path
+      redirect_to surcharges_path(page: session[:page])
     else
       flash[:alert] = 'Невозможно добавить начисление'
       render :new
@@ -26,7 +27,7 @@ class SurchargesController < ApplicationController
 
   def update
     if @surcharge.update(surcharge_params)
-      redirect_to surcharges_path
+      redirect_to surcharges_path(page: session[:page])
     else
       flash[:alert] = 'Невозможно отредактировать начисление'
       render :edit
@@ -35,7 +36,7 @@ class SurchargesController < ApplicationController
 
   def destroy
     flash[:alert] = 'Невозможно удалить начисление' unless @surcharge.destroy
-    redirect_to surcharges_path
+    redirect_to surcharges_path(page: session[:page])
   end
 
   private

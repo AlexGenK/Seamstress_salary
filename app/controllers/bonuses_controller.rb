@@ -4,7 +4,8 @@ class BonusesController < ApplicationController
 
   def index
     @bonus = Bonus.new(date: Date.today)
-    @bonuses = Bonus.order(date: :desc)
+    @pagy, @bonuses = pagy(Bonus.order(date: :desc))
+    session[:page] = @pagy.page
   end
 
   def create
@@ -38,7 +39,7 @@ class BonusesController < ApplicationController
 
   def destroy
     flash[:alert] = 'Невозможно удалить расчет' unless @bonus.destroy
-    redirect_to bonuses_path
+    redirect_to bonuses_path(page: session[:page])
   end
 
   private

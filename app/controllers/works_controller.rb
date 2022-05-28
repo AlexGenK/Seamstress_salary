@@ -12,6 +12,7 @@ class WorksController < ApplicationController
   def index
     @work = @production.works.new
     @works = @production.works.all.order(:model_number)
+    @page = session[:page]
   end
 
   def create

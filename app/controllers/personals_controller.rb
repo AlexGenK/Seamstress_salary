@@ -6,6 +6,7 @@ class PersonalsController < ApplicationController
 
   def index
     @personals = @bonus.personals.order(:user_name)
+    @page = session[:page]
   end
 
   def edit

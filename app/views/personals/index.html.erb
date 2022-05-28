@@ -1,7 +1,7 @@
 <h4>Коэффициенты для премии на <%= l(@bonus.date, format: '%B %Y') %></h4>
 <div class="row py-2">
   <div class="col-auto">
-    <%= link_to bonuses_path, class: "btn btn-secondary" do %>
+    <%= link_to bonuses_path(page: @page), class: "btn btn-secondary" do %>
       <i class="fas fa-undo-alt"></i> Вернуться
     <% end %>
   </div>

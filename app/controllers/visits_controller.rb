@@ -6,6 +6,7 @@ class VisitsController < ApplicationController
 
   def index
     @visits = @timesheet.visits.order(:user_name)
+    @page = session[:page]
   end
 
   def mass_new

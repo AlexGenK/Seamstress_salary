@@ -9,7 +9,7 @@
     <%= f.select :model_id, Model.all.order(:number).collect {|m| ["#{m.number} - #{m.name}", m.id]}, {}, {class: 'form-select'} %>
   </div>
   <div class='col-auto'>
-    <%= link_to productions_path, class: "btn btn-secondary" do %>
+    <%= link_to productions_path(page: @page), class: "btn btn-secondary" do %>
       <i class="fas fa-undo-alt"></i> Вернуться
   <% end %>
   </div>
