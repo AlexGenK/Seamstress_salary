@@ -47,6 +47,8 @@ class CreateSreportTableService < ExcelOperation
       create_cell_bold_border_wrap(y, x, 'Премия за асортимент')
       x += 1
       create_cell_bold_border_wrap(y, x, 'Прочие начисления')
+      x += 1
+      create_cell_bold_border_wrap(y, x, 'Всего:')
     end
 
     # УСТАНАВЛИВАЕМ ШИРИНУ СТОЛБЦОВ
@@ -126,13 +128,16 @@ class CreateSreportTableService < ExcelOperation
               if personal !=nil
                 create_cell_border(y, x, personal.factor)
                 x += 1
-                create_cell_bold_border(y, x, (personal.factor * row_sum).round)
+                exec_row_sum = (personal.factor * row_sum).round
+                create_cell_bold_border(y, x, exec_row_sum)
               else
+                exec_row_sum = 0
                 create_cell_border(y, x, '')
                 x += 1
                 create_cell_border(y, x, '')
               end
             else
+              exec_row_sum = 0
               create_cell_border(y, x, '')
               x += 1
               create_cell_border(y, x, '')
@@ -142,10 +147,14 @@ class CreateSreportTableService < ExcelOperation
             x += 1
             create_cell_border(y, x, factor_oper)
             x += 1
-            create_cell_bold_border(y, x, (factor_oper * row_sum).round)
+            asort_row_sum = (factor_oper * row_sum).round
+            create_cell_bold_border(y, x, asort_row_sum)
             # прочие начисления
             x += 1
-            create_cell_bold_border(y, x, GetSurchargeQuery.call(date, name))
+            surch_row_sum = GetSurchargeQuery.call(date, name)
+            create_cell_bold_border(y, x, surch_row_sum)
+            x += 1
+            create_cell_bold_border(y, x, row_sum + exec_row_sum + asort_row_sum + surch_row_sum)
           end
         end
       end
