@@ -7,16 +7,16 @@ class CreateSreportTableService < ExcelOperation
     @ws.sheet_name = 'ЗП'
     @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАРПЛАТЕ ЗА #{I18n.l(date, format: '%B %Y')}")
     @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
-    create_table(sum_hash, models_list, bonus, 'salary')
+    create_table(sum_hash, models_list, bonus, date, 'salary')
     @ws = @wb.add_worksheet('Время')
     @ws.add_cell(0, 0, "ОТЧЕТ ПО ЗАТРАЧЕНОМУ ВРЕМЕНИ ЗА #{I18n.l(date, format: '%B %Y')}")
     @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
-    create_table(time_hash, models_list, bonus, 'time')
+    create_table(time_hash, models_list, bonus, date, 'time')
   end
 
   private
 
-  def self.create_table(table_hash, models_list, bonus, style)
+  def self.create_table(table_hash, models_list, bonus, date, style)
     # ФОРМИРУЕМ ШАПКУ ТАБЛИЦЫ
     y = 3
     create_cell_border(y, 0, '')
@@ -38,13 +38,15 @@ class CreateSreportTableService < ExcelOperation
     else
       create_cell_bold_border(y, x, 'Итого:')
       x += 1
-      create_cell_bold_border_wrap(y, x, '% за план')
+      create_cell_border_wrap(y, x, '% за план')
       x += 1
       create_cell_bold_border_wrap(y, x, 'Премия за план')
       x += 1
-      create_cell_bold_border_wrap(y, x, '% за асортимент')
+      create_cell_border_wrap(y, x, '% за асортимент')
       x += 1
-      create_cell_bold_border_wrap(y, x, 'Премия за асортимент')  
+      create_cell_bold_border_wrap(y, x, 'Премия за асортимент')
+      x += 1
+      create_cell_bold_border_wrap(y, x, 'Прочие начисления')
     end
 
     # УСТАНАВЛИВАЕМ ШИРИНУ СТОЛБЦОВ
@@ -141,6 +143,9 @@ class CreateSreportTableService < ExcelOperation
             create_cell_border(y, x, factor_oper)
             x += 1
             create_cell_bold_border(y, x, (factor_oper * row_sum).round)
+            # прочие начисления
+            x += 1
+            create_cell_bold_border(y, x, GetSurchargeQuery.call(date, name))
           end
         end
       end
