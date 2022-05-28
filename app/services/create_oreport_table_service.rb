@@ -40,9 +40,9 @@ class CreateOreportTableService < ExcelOperation
         divergence = base_quant - oper_quant
         create_cell_border(y, 4, divergence)
         if divergence > 0
-          @ws[y][4].change_font_color('008000') 
+          @ws[y][4].change_fill('90ee90') 
         elsif divergence < 0
-          @ws[y][4].change_font_color('ff0000') 
+          @ws[y][4].change_fill('ff0000') 
         end
         y += 1
       end
