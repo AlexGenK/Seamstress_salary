@@ -1,0 +1,1 @@
+start rails s -e production
