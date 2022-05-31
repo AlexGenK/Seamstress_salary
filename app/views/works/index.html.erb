@@ -1,14 +1,14 @@
 <h4>Отчет по выработке <b><%= @production.user_name %></b> за <b><%= @production.date.strftime('%d.%m.%Y') %></b></h4>
 <%= form_for [@production, @work], html: {class: "row"} do |f| %>
-  <div class='col-auto'>
+  <div class='col-auto mb-2'>
     <%= f.button type: 'submit', class: "btn btn-primary" do %>
       <i class="fas fa-plus"></i> Добавить модель
     <% end %>
   </div>
-  <div class='col-auto'>
+  <div class='col-auto mb-2'>
     <%= f.select :model_id, Model.all.order(:number).collect {|m| ["#{m.number} - #{m.name}", m.id]}, {}, {class: 'form-select'} %>
   </div>
-  <div class='col-auto'>
+  <div class='col-auto mb-2'>
     <%= link_to productions_path(page: @page), class: "btn btn-secondary" do %>
       <i class="fas fa-undo-alt"></i> Вернуться
   <% end %>
