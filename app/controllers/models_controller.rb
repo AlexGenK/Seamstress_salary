@@ -1,5 +1,5 @@
 class ModelsController < ApplicationController
-  before_action :set_model, only: [:edit, :update, :destroy]
+  before_action :set_model, only: [:edit, :update, :destroy, :recalculate]
   load_and_authorize_resource
 
   def index
@@ -36,6 +36,17 @@ class ModelsController < ApplicationController
       flash[:alert] = 'Невозможно отредактировать модель'
       render :edit
     end
+  end
+
+  def recalculate
+    @model.operations.each do |oper| 
+      oper.calc_cost!
+      oper.save
+    end
+    @model.calculate_cost
+    @model.save
+    flash[:notice] = 'Стоимость модели перерасчитана'
+    redirect_to model_operations_path(@model)
   end
 
   private

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
   
   resources :models do
+    get 'recalculate', on: :member
     resources :operations do
       post 'filling', on: :collection
     end

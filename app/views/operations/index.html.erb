@@ -4,7 +4,10 @@
 <%= link_to new_model_operation_path(@model), class: "btn btn-primary" do %>
   <i class="fas fa-plus"></i> Добавить операцию
 <% end %>
-<%= link_to models_path, class: "btn btn-secondary m-2" do %>
+<%= link_to recalculate_model_path(@model), class: "btn btn-warning m-2" do %>
+  <i class="fas fa-calculator"></i> Пересчитать стоимость
+<% end %>
+<%= link_to models_path, class: "btn btn-secondary" do %>
   <i class="fas fa-undo-alt"></i> Вернуться
 <% end %>
 </br>
