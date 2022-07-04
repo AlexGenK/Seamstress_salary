@@ -1,8 +1,8 @@
 class ProductionsController < ApplicationController
   include Verifiable
 
-  before_action :set_production, only: [:destroy, :show]
-  before_action :detect_invalid_user, only: [:destroy, :show]
+  before_action :set_production, only: [:destroy, :show, :recalculate]
+  before_action :detect_invalid_user, only: [:destroy, :show, :recalculate]
 
   load_and_authorize_resource
 
@@ -47,7 +47,21 @@ class ProductionsController < ApplicationController
       @bf_sum = (@production.sum * @bf).round
       @all_sum += @bf_sum
     end
-     
+  end
+
+  def recalculate
+    @production.works.each do |work|
+      work.executions.each do |execution|
+        execution.calculate_sum
+        execution.save
+      end
+      work.calculate_sum
+      work.save
+    end
+    @production.calculate_sum
+    @production.save
+    flash[:notice] = 'Суммы отчета перерасчитаны'
+    redirect_to production_works_path(@production)
   end
 
   private
