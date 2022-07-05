@@ -27,8 +27,6 @@ class CreateOreportTableService < ExcelOperation
         @ws.add_cell(3, 0, "#{model_number} - #{model.name}")
         oper_hash = model_hash[0][model_number]
         name_hash = model_hash[1][model_number]
-        p oper_hash
-        p name_hash
         operations = model.operations.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')"))
         base_quant = oper_hash['1'] == nil ? 0 : oper_hash['1']
 
