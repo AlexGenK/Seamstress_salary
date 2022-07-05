@@ -12,7 +12,7 @@ class CreateOreportTableService < ExcelOperation
   def self.create_table(model_hash, models_list, date)
     models_list.each do |model_number|
       @ws = @wb.add_worksheet(model_number.gsub(/\//,'-'))
-      @ws.sheet_name = model_number
+      @ws.sheet_name = model_number.gsub(/\//,'-')
       @ws.change_column_width(1, 60)
       @ws.change_column_width(2, 20)
       @ws.change_column_width(3, 20)
