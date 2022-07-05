@@ -17,6 +17,7 @@ class CreateOreportTableService < ExcelOperation
       @ws.change_column_width(2, 20)
       @ws.change_column_width(3, 20)
       @ws.change_column_width(4, 20)
+      @ws.change_column_width(5, 40)
       model = Model.find_by(number: model_number)
       if model == nil
         @ws.add_cell(0, 0, "МОДЕЛЬ С НОМЕРОМ '#{model_number}' НЕ НАЙДЕНА В СПРАВОЧНИКАХ")
@@ -24,7 +25,10 @@ class CreateOreportTableService < ExcelOperation
         @ws.add_cell(0, 0, "ОТЧЕТ ПО ПРОИЗВОДСТВЕННЫМ ОПЕРАЦИЯМ ЗА #{I18n.l(date, format: '%B %Y')}")
         @ws.add_cell(1, 0, "сгенерирован #{Time.now}")
         @ws.add_cell(3, 0, "#{model_number} - #{model.name}")
-        oper_hash = model_hash[model_number]
+        oper_hash = model_hash[0][model_number]
+        name_hash = model_hash[1][model_number]
+        p oper_hash
+        p name_hash
         operations = model.operations.order(Arel.sql("(substring(number, '^[0-9]+'))::int, substring(concat(number, '!'), '[^0-9_].*$')"))
         base_quant = oper_hash['1'] == nil ? 0 : oper_hash['1']
 
@@ -33,9 +37,11 @@ class CreateOreportTableService < ExcelOperation
         create_cell_bold_border(5, 2, "По первой операции")
         create_cell_bold_border(5, 3, "По отчетам")
         create_cell_bold_border(5, 4, "Отклонение")
+        create_cell_bold_border(5, 5, "Исполнители")
         y = 6
         operations.each do |oper|
           oper_quant = oper_hash[oper.number] == nil ? 0 : oper_hash[oper.number]
+          oper_names = name_hash[oper.number] == nil ? '' : name_hash[oper.number]
           create_cell_border(y, 0, oper.number)
           create_cell_border(y, 1, oper.name)
           create_cell_border(y, 2, base_quant)
@@ -47,6 +53,7 @@ class CreateOreportTableService < ExcelOperation
           elsif divergence < 0
             @ws[y][4].change_fill('ff0000') 
           end
+          create_cell_border(y, 5, oper_names)
           y += 1
         end
       end
