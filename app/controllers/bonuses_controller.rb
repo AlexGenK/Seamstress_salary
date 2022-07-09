@@ -19,7 +19,13 @@ class BonusesController < ApplicationController
         timesheet = Timesheet.where('extract (year from date) = ? AND extract (month from date) = ?', @bonus.date.year, @bonus.date.month)[0]
         workers_list.each do |worker|
           report_time = current_productions.find_by(user_name: worker).time.round
-          timesheet_time = timesheet.visits.find_by(user_name: worker).time
+          begin
+            timesheet_time = timesheet.visits.find_by(user_name: worker).time
+          rescue
+            flash[:alert] = "Расчет премиальных коэффициентов не выполнен. Работник #{worker} отсутствует в табеле."
+            redirect_to bonuses_path
+            return
+          end
           execution = (100*report_time/timesheet_time).round
           factor = Factor.get_by_percent(execution)
           @personal = @bonus.personals.new(user_name: worker,
