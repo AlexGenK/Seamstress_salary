@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, uniqueness: true
+  validates :team, presence: true
 
   def is_last_admin?
     (self.admin_role?) && (User.where(admin_role: true).count <= 1)

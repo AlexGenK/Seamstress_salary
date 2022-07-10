@@ -21,6 +21,14 @@
   </div>
 
   <div class="form-group row mb-2">
+    <%= f.label :team, "Бригада", class: "col-lg-2 col-form-label" %>
+    <div class='col-lg-5'>
+      <%= f.text_field :team, class: "form-control" %>
+      <div class="invalid-feedback">должна быть указанна</div>
+    </div>
+  </div>
+
+  <div class="form-group row mb-2">
     <%= f.label :password, class: "col-lg-2 col-form-label" do %>
       Пароль
       <% if @minimum_password_length %>
