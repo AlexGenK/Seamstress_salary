@@ -18,18 +18,21 @@ class ExecutionsController < ApplicationController
   end
 
   def create
-    unless @work.executions.find_by(operation_id: execution_params[:operation_id]) == nil
-      flash[:alert] = 'Невозможно добавить уже существующую операцию'
-    else
-      @execution = @work.executions.new(execution_params)
-      @operation = Operation.find(execution_params[:operation_id])
-      @execution.operation_number = @operation.number
-      @execution.operation_name = @operation.name
-      @execution.operation_cost = @operation.cost
-      @execution.operation_time = @operation.time
-      @execution.sum = @execution.operation_cost * @execution.quantity
-      @execution.time = @execution.operation_time * @execution.quantity
-      flash[:alert] = 'Невозможно добавить выполнение' unless @execution.save
+    execution_params[:operation_id].each do |op_id|
+      unless @work.executions.find_by(operation_id: op_id.to_i) == nil
+        flash[:alert] = 'Невозможно добавить уже существующую операцию'
+        break
+      else
+        @execution = @work.executions.new(quantity: execution_params[:quantity], operation_id: op_id)
+        @operation = Operation.find(op_id)
+        @execution.operation_number = @operation.number
+        @execution.operation_name = @operation.name
+        @execution.operation_cost = @operation.cost
+        @execution.operation_time = @operation.time
+        @execution.sum = @execution.operation_cost * @execution.quantity
+        @execution.time = @execution.operation_time * @execution.quantity
+        flash[:alert] = 'Невозможно добавить выполнение' unless @execution.save
+      end
     end
     redirect_to production_work_executions_path(@production, @work)
   end
@@ -70,7 +73,7 @@ class ExecutionsController < ApplicationController
   end
 
   def execution_params
-    params.require(:execution).permit(:operation_id, :quantity, :sum, :time)
+    params.require(:execution).permit(:quantity, :sum, :time, :operation_id => [])
   end
 
   def recalculate_work_sum

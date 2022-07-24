@@ -1,6 +1,10 @@
 <%= form_for [production, work, execution], html: {class: "row"} do |f| %>
   <div class='col-auto mb-2'>
-    <%= f.select :operation_id, @oper_list, {}, {class: 'form-select', disabled: (style == :edit)} %>
+    <% if style == :edit %>
+      <%= f.select :operation_id, @oper_list, {}, {class: 'form-select', disabled: true} %>
+    <% else %>
+      <%= f.select :operation_id, @oper_list, {include_hidden: false}, {class: 'form-select', multiple: true } %>
+    <% end %>
   </div>
   <div class='col-auto mb-2'>
     <%= f.label :quantity, "количество:", class: "col-form-label" %>
