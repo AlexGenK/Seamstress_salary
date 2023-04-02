@@ -2,6 +2,9 @@
 <%= link_to new_model_path, class: "btn btn-primary" do %>
   <i class="fas fa-plus"></i> Добавить модель
 <% end %>
+<%= link_to models_path(format: :xlsx), class: "ms-2 btn btn-primary" do %>
+  <i class="fas fa-download"></i> Скачать справочник
+<% end %>
 </br>
 <table class="table table-striped table-sm">
   <thead>

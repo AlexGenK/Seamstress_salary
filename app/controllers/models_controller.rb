@@ -5,6 +5,13 @@ class ModelsController < ApplicationController
   def index
     flash[:alert] = nil
     @models = Model.order(:number)
+    respond_to do |format|
+      format.html
+      format.xlsx {
+        file_path = CreateMreportFileService.call(@models)
+        send_file("models_report.xlsx", filename:  "models_#{Date.today.strftime('%Y_%m_%d')}.xlsx")
+      }
+    end
   end
 
   def new
