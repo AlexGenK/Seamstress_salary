@@ -4,6 +4,8 @@ class Model < ApplicationRecord
 
   has_many :operations, dependent: :destroy
 
+  scope :actual, -> { where(visibility: true) }
+
   def calculate_cost
     self.update(cost: self.operations.sum(:cost))
   end

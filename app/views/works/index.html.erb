@@ -6,7 +6,7 @@
     <% end %>
   </div>
   <div class='col-auto mb-2'>
-    <%= f.select :model_id, Model.all.order(:number).collect {|m| ["#{m.number} - #{m.name}", m.id]}, {}, {class: 'form-select'} %>
+    <%= f.select :model_id, Model.actual.order(:number).collect {|m| ["#{m.number} - #{m.name}", m.id]}, {}, {class: 'form-select'} %>
   </div>
   <% if current_user.admin_role? %>
     <div class='col-auto mb-2'>

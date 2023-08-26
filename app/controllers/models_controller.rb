@@ -59,7 +59,7 @@ class ModelsController < ApplicationController
   private
 
   def model_params
-    params.require(:model).permit(:number, :name, :sewing)
+    params.require(:model).permit(:number, :name, :sewing, :visibility)
   end
 
   def set_model

@@ -1,5 +1,11 @@
 <%= form_for model do |f| %>
   <div class="row py-2">
+    <div class="col-md-1">
+      <%= f.label :visibility, "Видимость", class: "form-check-label" %><br/>
+      <div class="form-check form-switch mt-2">
+        <%= f.check_box :visibility, class: 'form-check-input' %>
+      </div>
+    </div>
     <div class="col-md-3">
       <%= f.label :sewing, "Тип", class: "form-label" %>
       <%= f.select :sewing, SEWING_TYPE, {}, {class: 'form-select'} %>
@@ -8,7 +14,7 @@
       <%= f.label :number, "Номер", class: "form-label" %>
       <%= f.text_field :number, class: 'form-control' %>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-5">
       <%= f.label :name, "Наименование", class: "form-label" %>
       <%= f.text_field :name, class: 'form-control' %>
     </div>
